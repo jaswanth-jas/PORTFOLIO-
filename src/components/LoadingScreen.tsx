@@ -6,12 +6,12 @@ interface LoadingScreenProps {
 }
 
 const LOGS = [
-  'SYSTEM_BOOT // INITIALIZING QUANTUM CORE...',
-  'ALLOCATING WEBGL SHADER BUFFERS...',
-  'CONNECTING NEURAL MESH INTERFACE...',
-  'COMPILING 3D RAYMARCHING PIPELINES...',
-  'CALIBRATING HYPER-DRIVE TELEMETRY...',
-  'SYSTEM STATUS: ONLINE // COMMAND CENTER READY'
+  'J.A.R.V.I.S. INITIALIZING // WELCOME HOME, SIR...',
+  'CHARGING TRI-ARC REACTOR COIL [10.2 GW]...',
+  'ALLOCATING NANOTECH SUIT SHADERS...',
+  'CALIBRATING REPULSOR AVIONICS PIPELINES...',
+  'TARGET LOCK PROTOCOLS: ACTIVE',
+  'STARK SUIT STATUS: ONLINE // COMMAND CENTER READY'
 ];
 
 export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
@@ -44,53 +44,59 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
   }, [logIndex, onComplete]);
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#030712] font-mono text-cyan-400">
+    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#030712] font-mono text-amber-400">
       {/* Background HUD Grid & CRT */}
-      <div className="hud-grid absolute inset-0 opacity-20" />
+      <div className="hud-grid absolute inset-0 opacity-25" />
       <div className="crt-overlay absolute inset-0 z-10 pointer-events-none" />
 
-      {/* Center Holographic Wireframe Constructing Box */}
-      <div className="relative mb-8 flex h-32 w-32 items-center justify-center">
-        {/* Animated outer ring */}
+      {/* Center Holographic Arc Reactor Assembly */}
+      <div className="relative mb-8 flex h-36 w-36 items-center justify-center">
+        {/* Outer Gold Rotating Ring */}
         <div
-          className="absolute inset-0 rounded-full border-2 border-dashed border-cyan-400 animate-spin"
-          style={{ animationDuration: '6s' }}
+          className="absolute inset-0 rounded-full border-2 border-dashed border-amber-400 animate-spin"
+          style={{ animationDuration: '7s' }}
         />
-        {/* Animated inner ring */}
+        {/* Middle Arc Cyan Ring */}
         <div
-          className="absolute inset-2 rounded-full border border-magenta-500/60 animate-spin"
-          style={{ animationDuration: '3s', animationDirection: 'reverse' }}
+          className="absolute inset-3 rounded-full border border-cyan-400/80 animate-spin shadow-[0_0_20px_#00f3ff]"
+          style={{ animationDuration: '3.5s', animationDirection: 'reverse' }}
+        />
+        {/* Inner Crimson Core Ring */}
+        <div
+          className="absolute inset-6 rounded-full border border-red-500/80 animate-ping"
         />
 
-        {/* 3D Wireframe Box assembly simulation */}
+        {/* 3D Arc Core glowing pulse */}
         <div
-          className="h-16 w-16 border-2 border-cyan-400 bg-cyan-500/10 shadow-[0_0_25px_#00f3ff] transition-all duration-300"
+          className="h-16 w-16 rounded-full border-2 border-amber-400 bg-amber-500/20 shadow-[0_0_35px_#ffd700] transition-all duration-300 flex items-center justify-center"
           style={{
-            transform: `rotate(${progress * 3.6}deg) scale(${0.5 + progress / 200})`,
+            transform: `scale(${0.7 + progress / 250})`,
           }}
-        />
+        >
+          <div className="h-6 w-6 rounded-full bg-cyan-400 shadow-[0_0_20px_#00f3ff]" />
+        </div>
 
         {/* Center Percentage */}
-        <div className="absolute font-orbitron text-lg font-bold text-white tracking-wider">
+        <div className="absolute font-orbitron text-sm font-black text-white tracking-widest drop-shadow-[0_0_10px_#ffd700]">
           {progress}%
         </div>
       </div>
 
-      {/* Cyberpunk Title */}
-      <h1 className="mb-2 font-orbitron text-xl font-black tracking-widest text-white text-glow-cyan">
-        SYSTEM BOOT SEQUENCE
+      {/* J.A.R.V.I.S. Title */}
+      <h1 className="mb-2 font-orbitron text-xl sm:text-2xl font-black tracking-widest text-white text-glow-gold">
+        J.A.R.V.I.S. SYSTEM BOOT PROTOCOL
       </h1>
 
       {/* Progress Bar Container */}
-      <div className="relative mb-4 h-2 w-72 overflow-hidden rounded border border-cyan-500/40 bg-slate-900 p-0.5">
+      <div className="relative mb-4 h-2.5 w-80 overflow-hidden rounded border border-amber-500/50 bg-slate-950 p-0.5 shadow-[0_0_15px_rgba(255,215,0,0.3)]">
         <div
-          className="h-full bg-gradient-to-r from-cyan-500 via-magenta-500 to-amber-400 transition-all duration-150 shadow-[0_0_10px_#00f3ff]"
+          className="h-full bg-gradient-to-r from-amber-400 via-cyan-400 to-red-500 transition-all duration-150 shadow-[0_0_15px_#ffd700]"
           style={{ width: `${progress}%` }}
         />
       </div>
 
       {/* Diagnostic Log Output */}
-      <div className="h-6 font-mono text-xs tracking-wider text-cyan-400/80">
+      <div className="h-6 font-mono text-xs tracking-wider text-amber-300">
         &gt; {LOGS[logIndex]}
       </div>
     </div>

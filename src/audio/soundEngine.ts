@@ -1,4 +1,4 @@
-// Web Audio API Sci-Fi Sound Synthesizer for HUD interactions
+// Web Audio API J.A.R.V.I.S. Sound Synthesizer for Stark Industries HUD
 
 class SoundEngine {
   private ctx: AudioContext | null = null;
@@ -24,7 +24,7 @@ class SoundEngine {
     return this.isMuted;
   }
 
-  // Futuristic HUD hover blip
+  // JARVIS HUD Hover blip (High-frequency Arc sweep)
   public playHover() {
     if (this.isMuted) return;
     try {
@@ -35,10 +35,10 @@ class SoundEngine {
       const gain = this.ctx.createGain();
 
       osc.type = 'sine';
-      osc.frequency.setValueAtTime(800, this.ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(1400, this.ctx.currentTime + 0.04);
+      osc.frequency.setValueAtTime(1000, this.ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(1800, this.ctx.currentTime + 0.04);
 
-      gain.gain.setValueAtTime(0.015, this.ctx.currentTime);
+      gain.gain.setValueAtTime(0.02, this.ctx.currentTime);
       gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.04);
 
       osc.connect(gain);
@@ -47,11 +47,11 @@ class SoundEngine {
       osc.start();
       osc.stop(this.ctx.currentTime + 0.04);
     } catch {
-      // Ignore audio errors if blocked by browser policy
+      // Ignore
     }
   }
 
-  // Tactical click trigger
+  // Repulsor Target Lock click
   public playClick() {
     if (this.isMuted) return;
     try {
@@ -62,10 +62,10 @@ class SoundEngine {
       const gain = this.ctx.createGain();
 
       osc.type = 'triangle';
-      osc.frequency.setValueAtTime(1600, this.ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(400, this.ctx.currentTime + 0.06);
+      osc.frequency.setValueAtTime(1800, this.ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(500, this.ctx.currentTime + 0.06);
 
-      gain.gain.setValueAtTime(0.03, this.ctx.currentTime);
+      gain.gain.setValueAtTime(0.035, this.ctx.currentTime);
       gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.06);
 
       osc.connect(gain);
@@ -78,7 +78,7 @@ class SoundEngine {
     }
   }
 
-  // Sci-Fi Text Glitch sound
+  // JARVIS Voice/Text Glitch sound
   public playGlitch() {
     if (this.isMuted) return;
     try {
@@ -89,11 +89,11 @@ class SoundEngine {
       const gain = this.ctx.createGain();
 
       osc.type = 'sawtooth';
-      osc.frequency.setValueAtTime(300, this.ctx.currentTime);
-      osc.frequency.setValueAtTime(900, this.ctx.currentTime + 0.02);
-      osc.frequency.setValueAtTime(150, this.ctx.currentTime + 0.04);
+      osc.frequency.setValueAtTime(400, this.ctx.currentTime);
+      osc.frequency.setValueAtTime(1200, this.ctx.currentTime + 0.02);
+      osc.frequency.setValueAtTime(250, this.ctx.currentTime + 0.04);
 
-      gain.gain.setValueAtTime(0.02, this.ctx.currentTime);
+      gain.gain.setValueAtTime(0.025, this.ctx.currentTime);
       gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.06);
 
       osc.connect(gain);
@@ -106,7 +106,7 @@ class SoundEngine {
     }
   }
 
-  // Terminal Typing Beep
+  // JARVIS Terminal Typing sound
   public playTyping() {
     if (this.isMuted) return;
     try {
@@ -117,9 +117,9 @@ class SoundEngine {
       const gain = this.ctx.createGain();
 
       osc.type = 'square';
-      osc.frequency.setValueAtTime(600 + Math.random() * 400, this.ctx.currentTime);
+      osc.frequency.setValueAtTime(800 + Math.random() * 500, this.ctx.currentTime);
 
-      gain.gain.setValueAtTime(0.008, this.ctx.currentTime);
+      gain.gain.setValueAtTime(0.009, this.ctx.currentTime);
       gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 0.02);
 
       osc.connect(gain);
@@ -132,7 +132,7 @@ class SoundEngine {
     }
   }
 
-  // Quantum Warp Transmission sent sound
+  // Arc Reactor Repulsor Warp / Transmission sound
   public playWarp() {
     if (this.isMuted) return;
     try {
@@ -143,17 +143,17 @@ class SoundEngine {
       const gain = this.ctx.createGain();
 
       osc.type = 'sine';
-      osc.frequency.setValueAtTime(150, this.ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(2400, this.ctx.currentTime + 0.35);
+      osc.frequency.setValueAtTime(200, this.ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(3200, this.ctx.currentTime + 0.4);
 
-      gain.gain.setValueAtTime(0.04, this.ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.35);
+      gain.gain.setValueAtTime(0.05, this.ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.4);
 
       osc.connect(gain);
       gain.connect(this.ctx.destination);
 
       osc.start();
-      osc.stop(this.ctx.currentTime + 0.35);
+      osc.stop(this.ctx.currentTime + 0.4);
     } catch {
       // Ignore
     }

@@ -13,21 +13,19 @@ export const ParticleField: React.FC<ParticleFieldProps> = ({ count = 2500 }) =>
     const posArr = new Float32Array(count * 3);
     const colArr = new Float32Array(count * 3);
 
+    const gold = new THREE.Color('#ffd700');
     const cyan = new THREE.Color('#00f3ff');
-    const magenta = new THREE.Color('#ff0055');
-    const purple = new THREE.Color('#8a2be2');
+    const crimson = new THREE.Color('#ff1a1a');
 
     for (let i = 0; i < count; i++) {
-      // Spread across 3D space
       posArr[i * 3] = (Math.random() - 0.5) * 35;
       posArr[i * 3 + 1] = (Math.random() - 0.5) * 35;
       posArr[i * 3 + 2] = (Math.random() - 0.5) * 35;
 
-      // Color pick
       const randColor = Math.random();
-      let selectedColor = cyan;
-      if (randColor > 0.75) selectedColor = magenta;
-      else if (randColor > 0.5) selectedColor = purple;
+      let selectedColor = gold;
+      if (randColor > 0.65) selectedColor = cyan;
+      else if (randColor > 0.4) selectedColor = crimson;
 
       colArr[i * 3] = selectedColor.r;
       colArr[i * 3 + 1] = selectedColor.g;
@@ -39,10 +37,9 @@ export const ParticleField: React.FC<ParticleFieldProps> = ({ count = 2500 }) =>
 
   useFrame((state, delta) => {
     if (pointsRef.current) {
-      pointsRef.current.rotation.y += delta * 0.03;
-      pointsRef.current.rotation.x += delta * 0.01;
+      pointsRef.current.rotation.y += delta * 0.035;
+      pointsRef.current.rotation.x += delta * 0.012;
 
-      // Mouse deflection tilt
       const mouseX = state.pointer.x * 0.5;
       const mouseY = state.pointer.y * 0.5;
       pointsRef.current.rotation.y = THREE.MathUtils.lerp(pointsRef.current.rotation.y, pointsRef.current.rotation.y + mouseX * 0.02, 0.05);
@@ -63,10 +60,10 @@ export const ParticleField: React.FC<ParticleFieldProps> = ({ count = 2500 }) =>
         />
       </bufferGeometry>
       <pointsMaterial
-        size={0.06}
+        size={0.065}
         vertexColors
         transparent
-        opacity={0.75}
+        opacity={0.8}
         blending={THREE.AdditiveBlending}
         sizeAttenuation
       />

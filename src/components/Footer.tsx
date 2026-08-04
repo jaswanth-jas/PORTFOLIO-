@@ -22,30 +22,30 @@ const TwitterIcon = ({ className }: { className?: string }) => (
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="relative w-full border-t border-cyan-500/20 bg-slate-950/80 py-12 px-4 font-mono text-xs text-slate-400">
+    <footer className="relative w-full border-t border-amber-500/30 bg-slate-950/80 py-12 px-4 font-mono text-xs text-slate-400">
       <div className="hud-grid absolute inset-0 opacity-10 pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
         {/* Left branding */}
         <div className="flex items-center gap-3">
-          <div className="flex h-8 w-8 items-center justify-center rounded border border-cyan-400/50 bg-cyan-500/10">
-            <Cpu className="h-4 w-4 text-cyan-400" />
+          <div className="flex h-8 w-8 items-center justify-center rounded border border-amber-400/80 bg-amber-500/10 shadow-[0_0_12px_#ffd700]">
+            <Cpu className="h-4 w-4 text-amber-400" />
           </div>
           <div>
             <div className="font-orbitron font-bold text-white tracking-widest">
-              ALEX CHEN <span className="text-cyan-400">//</span> COMMAND CENTER
+              STARK INDUSTRIES <span className="text-amber-400">//</span> J.A.R.V.I.S.
             </div>
             <div className="text-[10px] text-slate-500">
-              © 2026 QUANTUM GRAPHICS LABS. ALL RIGHTS RESERVED.
+              © 2026 STARK INDUSTRIES LABS. MALIBU POINT 10880.
             </div>
           </div>
         </div>
 
         {/* Telemetry Footer Badge */}
-        <div className="flex items-center gap-6 font-mono text-[11px] text-cyan-400/80">
-          <div>ENGINE: THREE.JS R168</div>
-          <div>FRAMEWORK: REACT 19</div>
-          <div>GPU_COMPUTE: WEBGPU_READY</div>
+        <div className="flex items-center gap-6 font-mono text-[11px] text-amber-400/90">
+          <div>ARC_ENGINE: 10.2 GW</div>
+          <div>SUIT: MARK LXXXV</div>
+          <div>J.A.R.V.I.S.: ONLINE</div>
         </div>
 
         {/* Social Links */}
@@ -56,7 +56,7 @@ export const Footer: React.FC = () => {
             rel="noopener noreferrer"
             onMouseEnter={() => soundEngine.playHover()}
             onClick={() => soundEngine.playClick()}
-            className="interactive flex h-9 w-9 items-center justify-center rounded border border-slate-800 bg-slate-900 text-slate-400 hover:border-cyan-400 hover:text-cyan-400 hover:shadow-[0_0_15px_#00f3ff] transition-all"
+            className="interactive flex h-9 w-9 items-center justify-center rounded border border-slate-800 bg-slate-900 text-slate-400 hover:border-amber-400 hover:text-amber-400 hover:shadow-[0_0_15px_#ffd700] transition-all"
           >
             <GithubIcon className="h-4 w-4" />
           </a>
@@ -76,7 +76,7 @@ export const Footer: React.FC = () => {
             rel="noopener noreferrer"
             onMouseEnter={() => soundEngine.playHover()}
             onClick={() => soundEngine.playClick()}
-            className="interactive flex h-9 w-9 items-center justify-center rounded border border-slate-800 bg-slate-900 text-slate-400 hover:border-magenta-400 hover:text-magenta-400 hover:shadow-[0_0_15px_#ff0055] transition-all"
+            className="interactive flex h-9 w-9 items-center justify-center rounded border border-slate-800 bg-slate-900 text-slate-400 hover:border-red-500 hover:text-red-500 hover:shadow-[0_0_15px_#ff1a1a] transition-all"
           >
             <TwitterIcon className="h-4 w-4" />
           </a>

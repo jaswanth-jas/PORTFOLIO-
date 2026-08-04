@@ -42,14 +42,14 @@ export const Projects: React.FC = () => {
     <section id="projects" className="relative w-full py-20 px-4 max-w-7xl mx-auto">
       {/* Header */}
       <div className="mb-12 text-center">
-        <div className="inline-flex items-center gap-2 font-mono text-xs text-cyan-400 tracking-widest uppercase mb-2">
+        <div className="inline-flex items-center gap-2 font-mono text-xs text-amber-400 tracking-widest uppercase mb-2">
           <Layers className="h-4 w-4" />
-          <span>TACTICAL MODULES // 3D ARCHITECTURE</span>
+          <span>STARK INDUSTRIES MARK MODULES // 3D ARCHITECTURE</span>
         </div>
-        <h2 className="font-orbitron text-3xl sm:text-5xl font-black text-white text-glow-cyan">
-          FEATURED PROJECTS
+        <h2 className="font-orbitron text-3xl sm:text-5xl font-black text-white text-glow-gold">
+          MARK SUIT PROJECTS
         </h2>
-        <div className="h-1 w-24 bg-gradient-to-r from-cyan-500 to-magenta-500 mx-auto mt-4 rounded-full" />
+        <div className="h-1 w-24 bg-gradient-to-r from-amber-500 via-cyan-400 to-red-500 mx-auto mt-4 rounded-full" />
       </div>
 
       {/* Grid of 3D Floating Project Cards */}
@@ -75,22 +75,22 @@ export const Projects: React.FC = () => {
                 transform: `perspective(1000px) rotateX(${rot.x}deg) rotateY(${rot.y}deg) scale3d(${isHovered ? 1.02 : 1}, ${isHovered ? 1.02 : 1}, 1)`,
                 transition: isHovered ? 'transform 0.1s ease-out' : 'transform 0.5s ease-out',
               }}
-              className="interactive glass-panel glass-panel-hover corner-brackets relative cursor-pointer rounded-xl p-6 flex flex-col justify-between"
+              className="interactive glass-panel glass-panel-hover corner-brackets relative cursor-pointer rounded-xl p-6 flex flex-col justify-between border-amber-500/30"
             >
               <div>
                 {/* Header Badge */}
-                <div className="flex items-center justify-between font-mono text-[10px] text-cyan-400 mb-3">
-                  <span className="rounded bg-cyan-950/80 px-2 py-0.5 border border-cyan-500/40">
+                <div className="flex items-center justify-between font-mono text-[10px] text-amber-400 mb-3">
+                  <span className="rounded bg-amber-950/80 px-2 py-0.5 border border-amber-500/40">
                     {project.category}
                   </span>
                   <span>ID: {project.id.toUpperCase()}</span>
                 </div>
 
                 {/* Title */}
-                <h3 className="font-orbitron text-xl font-bold text-white mb-1 group-hover:text-cyan-400">
+                <h3 className="font-orbitron text-xl font-bold text-white mb-1 group-hover:text-amber-400">
                   {project.title}
                 </h3>
-                <p className="font-mono text-xs text-magenta-400 mb-3">{project.subtitle}</p>
+                <p className="font-mono text-xs text-cyan-400 mb-3">{project.subtitle}</p>
                 <p className="font-rajdhani text-sm text-slate-300 mb-4 line-clamp-3">
                   {project.description}
                 </p>
@@ -98,11 +98,11 @@ export const Projects: React.FC = () => {
 
               <div>
                 {/* Metric Readout */}
-                <div className="mb-4 grid grid-cols-2 gap-2 font-mono text-[10px] bg-slate-950/60 p-2 rounded border border-slate-800">
+                <div className="mb-4 grid grid-cols-2 gap-2 font-mono text-[10px] bg-slate-950/80 p-2 rounded border border-slate-800">
                   {project.metrics.slice(0, 2).map((m) => (
                     <div key={m.label}>
                       <div className="text-slate-400">{m.label}</div>
-                      <div className="text-cyan-300 font-bold">{m.value}</div>
+                      <div className="text-amber-300 font-bold">{m.value}</div>
                     </div>
                   ))}
                 </div>
@@ -112,7 +112,7 @@ export const Projects: React.FC = () => {
                   {project.tags.slice(0, 4).map((tag) => (
                     <span
                       key={tag}
-                      className="font-mono text-[9px] rounded bg-slate-800/80 px-2 py-0.5 text-slate-300 border border-slate-700"
+                      className="font-mono text-[9px] rounded bg-slate-900 px-2 py-0.5 text-slate-300 border border-slate-700"
                     >
                       {tag}
                     </span>
@@ -120,8 +120,8 @@ export const Projects: React.FC = () => {
                 </div>
 
                 {/* Action trigger label */}
-                <div className="flex items-center justify-between font-mono text-xs text-cyan-400 pt-2 border-t border-cyan-500/20">
-                  <span>INSPECT MODULE</span>
+                <div className="flex items-center justify-between font-mono text-xs text-amber-400 pt-2 border-t border-amber-500/20">
+                  <span>INSPECT MARK SUIT</span>
                   <span>&rarr;</span>
                 </div>
               </div>
@@ -137,35 +137,35 @@ export const Projects: React.FC = () => {
           <MatrixRain color={selectedProject.accentColor} opacity={0.25} />
 
           {/* Modal Container */}
-          <div className="glass-panel corner-brackets relative z-10 w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl border-cyan-400 p-6 shadow-[0_0_50px_rgba(0,243,255,0.3)] text-white">
+          <div className="glass-panel corner-brackets relative z-10 w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl border-amber-400 p-6 shadow-[0_0_55px_rgba(255,215,0,0.35)] text-white">
             {/* Close Button */}
             <button
               onClick={() => {
                 setSelectedProject(null);
                 soundEngine.playClick();
               }}
-              className="interactive absolute top-4 right-4 flex h-9 w-9 items-center justify-center rounded-full border border-cyan-400/50 bg-slate-900 text-cyan-400 hover:bg-magenta-500 hover:text-white transition-all"
+              className="interactive absolute top-4 right-4 flex h-9 w-9 items-center justify-center rounded-full border border-amber-400/50 bg-slate-900 text-amber-400 hover:bg-red-500 hover:text-white transition-all"
             >
               <X className="h-5 w-5" />
             </button>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {/* 3D Preview Canvas */}
-              <div className="relative h-64 lg:h-auto min-h-[260px] rounded-xl overflow-hidden border border-cyan-500/30 bg-slate-950/80">
+              <div className="relative h-64 lg:h-auto min-h-[260px] rounded-xl overflow-hidden border border-amber-500/40 bg-slate-950/80">
                 <Canvas camera={{ position: [0, 0, 5] }}>
                   <ProjectModelPreview
                     shape={selectedProject.modelShape}
                     color={selectedProject.accentColor}
                   />
                 </Canvas>
-                <div className="absolute bottom-2 left-2 font-mono text-[10px] text-cyan-400 bg-slate-900/80 px-2 py-0.5 rounded border border-cyan-500/30">
-                  [ 3D HOLO INSPECTOR ACTIVE ]
+                <div className="absolute bottom-2 left-2 font-mono text-[10px] text-amber-400 bg-slate-950/90 px-2 py-0.5 rounded border border-amber-500/40">
+                  [ 3D STARK HOLO INSPECTOR ACTIVE ]
                 </div>
               </div>
 
               {/* Detail Content */}
               <div>
-                <div className="flex items-center gap-2 font-mono text-xs text-cyan-400 mb-2">
+                <div className="flex items-center gap-2 font-mono text-xs text-amber-400 mb-2">
                   <Cpu className="h-4 w-4" />
                   <span>{selectedProject.category}</span>
                 </div>
@@ -173,7 +173,7 @@ export const Projects: React.FC = () => {
                 <h3 className="font-orbitron text-2xl sm:text-3xl font-black text-white mb-1">
                   {selectedProject.title}
                 </h3>
-                <p className="font-mono text-sm text-magenta-400 mb-4">
+                <p className="font-mono text-sm text-cyan-400 mb-4">
                   {selectedProject.subtitle}
                 </p>
 
@@ -182,25 +182,25 @@ export const Projects: React.FC = () => {
                 </p>
 
                 {/* Telemetry Metrics */}
-                <div className="mb-6 grid grid-cols-3 gap-2 font-mono text-xs bg-slate-950 p-3 rounded border border-cyan-500/30">
+                <div className="mb-6 grid grid-cols-3 gap-2 font-mono text-xs bg-slate-950 p-3 rounded border border-amber-500/30">
                   {selectedProject.metrics.map((m) => (
                     <div key={m.label}>
                       <div className="text-slate-400 text-[10px]">{m.label}</div>
-                      <div className="text-cyan-400 font-bold">{m.value}</div>
+                      <div className="text-amber-400 font-bold">{m.value}</div>
                     </div>
                   ))}
                 </div>
 
                 {/* Architecture Highlights */}
                 <div className="mb-6">
-                  <div className="font-mono text-xs font-bold text-cyan-300 mb-2 flex items-center gap-1.5">
-                    <Code2 className="h-4 w-4 text-cyan-400" />
-                    <span>SYSTEM ARCHITECTURE HIGHLIGHTS:</span>
+                  <div className="font-mono text-xs font-bold text-amber-300 mb-2 flex items-center gap-1.5">
+                    <Code2 className="h-4 w-4 text-amber-400" />
+                    <span>SUIT AVIONICS & ARCHITECTURE:</span>
                   </div>
                   <ul className="space-y-1.5 font-rajdhani text-sm text-slate-300">
                     {selectedProject.architectureDetails.map((item, idx) => (
                       <li key={idx} className="flex items-start gap-2">
-                        <span className="text-cyan-400 font-mono">&gt;</span>
+                        <span className="text-amber-400 font-mono">&gt;</span>
                         <span>{item}</span>
                       </li>
                     ))}
@@ -208,15 +208,15 @@ export const Projects: React.FC = () => {
                 </div>
 
                 {/* Links */}
-                <div className="flex flex-wrap gap-4 pt-4 border-t border-cyan-500/20">
+                <div className="flex flex-wrap gap-4 pt-4 border-t border-amber-500/20">
                   {selectedProject.liveUrl && (
                     <a
                       href={selectedProject.liveUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="interactive flex items-center gap-2 rounded bg-cyan-500 px-4 py-2 font-mono text-xs font-bold text-slate-950 hover:bg-cyan-400 transition-colors shadow-[0_0_15px_#00f3ff]"
+                      className="interactive flex items-center gap-2 rounded bg-amber-400 px-4 py-2 font-mono text-xs font-bold text-slate-950 hover:bg-amber-300 transition-colors shadow-[0_0_15px_#ffd700]"
                     >
-                      <span>LAUNCH SIMULATION</span>
+                      <span>LAUNCH SUIT SIMULATION</span>
                       <ExternalLink className="h-3.5 w-3.5" />
                     </a>
                   )}
@@ -225,7 +225,7 @@ export const Projects: React.FC = () => {
                       href={selectedProject.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="interactive flex items-center gap-2 rounded border border-slate-700 bg-slate-900 px-4 py-2 font-mono text-xs font-bold text-slate-200 hover:border-cyan-400 hover:text-cyan-400 transition-colors"
+                      className="interactive flex items-center gap-2 rounded border border-slate-700 bg-slate-900 px-4 py-2 font-mono text-xs font-bold text-slate-200 hover:border-amber-400 hover:text-amber-400 transition-colors"
                     >
                       <GithubIcon className="h-4 w-4" />
                       <span>SOURCE CODE</span>
