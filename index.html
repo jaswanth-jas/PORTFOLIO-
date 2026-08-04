@@ -1,19 +1,717 @@
-<!doctype html>
-<html lang="en" class="dark scroll-smooth">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ALEX CHEN // Cyberpunk 3D Command Center Portfolio</title>
-    <meta name="description" content="Futuristic 3D developer portfolio featuring interactive Three.js graphics, cyberpunk HUD interfaces, floating 3D modules, and quantum terminal contact interface." />
-    
-    <!-- Google Fonts for Scifi Cyberpunk Aesthetic -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,700;1,400&family=Orbitron:wght@400;600;800;900&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-  </head>
-  <body class="bg-[#030712] text-slate-100 overflow-x-hidden selection:bg-cyan-500 selection:text-black font-rajdhani">
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ETHAN REYES // SYSTEM ONLINE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-deep:#020a12;
+    --bg-panel:rgba(8,26,42,0.55);
+    --bg-panel-solid:#081a2a;
+    --cyan:#00e6ff;
+    --cyan-dim:#0a84ff;
+    --amber:#ffb02e;
+    --red:#ff3b3b;
+    --text-hud:#cfe9ff;
+    --text-dim:#5f8aa8;
+    --line:rgba(0,230,255,0.25);
+    --glow:rgba(0,230,255,0.55);
+    --radius:2px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg-deep);
+    color:var(--text-hud);
+    font-family:'Rajdhani',sans-serif;
+    overflow-x:hidden;
+    cursor:none;
+  }
+  ::selection{background:var(--cyan);color:#000;}
+
+  /* ---------- background layers ---------- */
+  #bg-canvas{position:fixed;inset:0;z-index:0;opacity:0.55;}
+  .grid-overlay{
+    position:fixed;inset:0;z-index:1;pointer-events:none;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:60px 60px;
+    opacity:0.08;
+  }
+  .scanlines{
+    position:fixed;inset:0;z-index:2;pointer-events:none;
+    background:repeating-linear-gradient(0deg,rgba(0,0,0,0.15) 0px,rgba(0,0,0,0.15) 1px,transparent 1px,transparent 3px);
+    opacity:0.35;
+    mix-blend-mode:overlay;
+  }
+  .vignette{
+    position:fixed;inset:0;z-index:2;pointer-events:none;
+    background:radial-gradient(ellipse at center, transparent 40%, rgba(0,4,8,0.85) 100%);
+  }
+
+  /* ---------- custom cursor ---------- */
+  #cursor-dot{
+    position:fixed;width:8px;height:8px;border-radius:50%;
+    background:var(--cyan);box-shadow:0 0 12px var(--cyan), 0 0 24px var(--cyan);
+    pointer-events:none;z-index:9999;transform:translate(-50%,-50%);
+    transition:width .15s,height .15s,background .15s;
+  }
+  #cursor-ring{
+    position:fixed;width:32px;height:32px;border:1px solid var(--cyan);border-radius:50%;
+    pointer-events:none;z-index:9998;transform:translate(-50%,-50%);
+    transition:transform .12s ease-out, opacity .2s;opacity:.6;
+  }
+
+  /* ---------- loading screen ---------- */
+  #loader{
+    position:fixed;inset:0;z-index:10000;background:var(--bg-deep);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;
+    transition:opacity .8s ease, visibility .8s ease;
+  }
+  #loader.hidden{opacity:0;visibility:hidden;}
+  .loader-ring{
+    width:140px;height:140px;border-radius:50%;
+    border:2px solid rgba(0,230,255,0.15);
+    border-top:2px solid var(--cyan);
+    border-right:2px solid var(--cyan);
+    animation:spin 1.4s linear infinite;
+    position:relative;
+    box-shadow:0 0 30px rgba(0,230,255,0.25) inset;
+  }
+  .loader-ring::before{
+    content:'';position:absolute;inset:18px;border-radius:50%;
+    border:1px dashed rgba(0,230,255,0.4);
+    animation:spin 3s linear infinite reverse;
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
+  #loader-pct{font-family:'Share Tech Mono',monospace;font-size:14px;letter-spacing:4px;color:var(--cyan);}
+  #loader-label{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--text-dim);text-transform:uppercase;}
+
+  /* ---------- nav ---------- */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:500;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 42px;
+    background:linear-gradient(to bottom, rgba(2,10,18,0.85), transparent);
+    backdrop-filter:blur(6px);
+  }
+  .logo{
+    font-family:'Orbitron',sans-serif;font-weight:700;font-size:18px;
+    letter-spacing:3px;color:var(--cyan);text-shadow:0 0 10px var(--glow);
+  }
+  .logo span{color:var(--text-hud);}
+  .nav-links{display:flex;gap:36px;list-style:none;}
+  .nav-links a{
+    color:var(--text-dim);text-decoration:none;font-family:'Share Tech Mono',monospace;
+    font-size:12px;letter-spacing:2px;text-transform:uppercase;position:relative;padding-bottom:4px;
+    transition:color .25s;
+  }
+  .nav-links a::after{
+    content:'';position:absolute;left:0;bottom:0;width:0%;height:1px;background:var(--cyan);
+    box-shadow:0 0 8px var(--cyan);transition:width .3s;
+  }
+  .nav-links a:hover{color:var(--cyan);}
+  .nav-links a:hover::after{width:100%;}
+  .nav-status{
+    display:flex;align-items:center;gap:8px;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--cyan);
+  }
+  .pulse-dot{width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan);animation:pulse 1.8s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+
+  /* ---------- hero ---------- */
+  #hero{
+    position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    z-index:5;overflow:hidden;
+  }
+  #hero-canvas{position:absolute;inset:0;z-index:1;}
+  .hero-content{
+    position:relative;z-index:3;text-align:center;pointer-events:none;
+  }
+  .hero-eyebrow{
+    font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:6px;color:var(--amber);
+    text-transform:uppercase;margin-bottom:18px;opacity:0;animation:fadeUp .8s .3s forwards;
+  }
+  .hero-title{
+    font-family:'Orbitron',sans-serif;font-weight:900;
+    font-size:clamp(38px,7vw,92px);letter-spacing:4px;line-height:1.05;
+    color:var(--text-hud);text-shadow:0 0 24px var(--glow);
+    opacity:0;animation:fadeUp .8s .5s forwards;
+  }
+  .hero-title .glitch-accent{color:var(--cyan);}
+  .hero-sub{
+    margin-top:20px;font-family:'Share Tech Mono',monospace;font-size:14px;letter-spacing:2px;
+    color:var(--text-dim);max-width:560px;margin-left:auto;margin-right:auto;
+    opacity:0;animation:fadeUp .8s .7s forwards;
+  }
+  .hero-cta{
+    margin-top:40px;display:inline-flex;gap:18px;pointer-events:all;
+    opacity:0;animation:fadeUp .8s .9s forwards;
+  }
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+
+  .btn{
+    font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:2px;text-transform:uppercase;
+    padding:14px 30px;border:1px solid var(--cyan);color:var(--cyan);text-decoration:none;
+    background:rgba(0,230,255,0.05);position:relative;overflow:hidden;transition:.3s;clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);
+  }
+  .btn:hover{background:rgba(0,230,255,0.18);box-shadow:0 0 22px rgba(0,230,255,0.35);}
+  .btn.ghost{border-color:var(--text-dim);color:var(--text-hud);background:transparent;}
+  .btn.ghost:hover{border-color:var(--cyan);color:var(--cyan);}
+
+  .hud-corner{position:absolute;width:34px;height:34px;border-color:var(--cyan);opacity:.6;z-index:3;}
+  .hud-corner.tl{top:100px;left:30px;border-top:2px solid;border-left:2px solid;}
+  .hud-corner.tr{top:100px;right:30px;border-top:2px solid;border-right:2px solid;}
+  .hud-corner.bl{bottom:30px;left:30px;border-bottom:2px solid;border-left:2px solid;}
+  .hud-corner.br{bottom:30px;right:30px;border-bottom:2px solid;border-right:2px solid;}
+
+  .scroll-cue{
+    position:absolute;bottom:34px;left:50%;transform:translateX(-50%);z-index:4;
+    font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--text-dim);
+    display:flex;flex-direction:column;align-items:center;gap:8px;
+  }
+  .scroll-cue .bar{width:1px;height:34px;background:linear-gradient(var(--cyan),transparent);animation:scrollbar 1.6s ease-in-out infinite;}
+  @keyframes scrollbar{0%{transform:scaleY(0);transform-origin:top;}50%{transform:scaleY(1);transform-origin:top;}51%{transform-origin:bottom;}100%{transform:scaleY(0);transform-origin:bottom;}}
+
+  /* ---------- sections common ---------- */
+  section{position:relative;z-index:5;padding:130px 8vw;}
+  .section-head{margin-bottom:64px;}
+  .section-eyebrow{
+    font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:5px;color:var(--amber);
+    text-transform:uppercase;display:flex;align-items:center;gap:14px;margin-bottom:14px;
+  }
+  .section-eyebrow::before{content:'';width:26px;height:1px;background:var(--amber);}
+  .section-title{
+    font-family:'Orbitron',sans-serif;font-weight:700;font-size:clamp(26px,3.6vw,44px);
+    letter-spacing:2px;color:var(--text-hud);
+  }
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  /* ---------- about ---------- */
+  #about .about-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:70px;align-items:start;}
+  .about-text p{font-size:17px;line-height:1.8;color:var(--text-hud);margin-bottom:20px;font-weight:400;}
+  .about-text .highlight{color:var(--cyan);}
+  .readout{
+    border:1px solid var(--line);background:var(--bg-panel);padding:26px 28px;
+    font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--text-dim);position:relative;
+  }
+  .readout::before{content:'DATA READOUT';position:absolute;top:-9px;left:14px;background:var(--bg-deep);padding:0 8px;color:var(--cyan);letter-spacing:2px;font-size:10px;}
+  .readout-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px dashed rgba(0,230,255,0.15);}
+  .readout-row:last-child{border-bottom:none;}
+  .readout-row span:last-child{color:var(--cyan);}
+
+  /* ---------- skills ---------- */
+  .reactor-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:34px;}
+  .reactor-card{border:1px solid var(--line);background:var(--bg-panel);padding:26px;position:relative;}
+  .reactor-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px;}
+  .reactor-name{font-family:'Orbitron',sans-serif;font-size:13px;letter-spacing:1px;color:var(--text-hud);}
+  .reactor-pct{font-family:'Share Tech Mono',monospace;font-size:13px;color:var(--cyan);}
+  .reactor-bar-track{height:8px;background:rgba(0,230,255,0.08);border:1px solid var(--line);position:relative;overflow:hidden;}
+  .reactor-bar-fill{
+    height:100%;width:0%;background:linear-gradient(90deg,var(--cyan-dim),var(--cyan));
+    box-shadow:0 0 10px var(--cyan);transition:width 1.6s cubic-bezier(.16,.84,.44,1);
+  }
+  .reactor-bar-fill::after{
+    content:'';position:absolute;inset:0;
+    background:repeating-linear-gradient(90deg,rgba(0,0,0,.25) 0 2px,transparent 2px 8px);
+  }
+  .reactor-tag{margin-top:14px;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:1px;color:var(--text-dim);}
+
+  /* ---------- projects ---------- */
+  .mission-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:30px;}
+  .mission-card{
+    border:1px solid var(--line);background:var(--bg-panel);padding:30px;cursor:pointer;
+    position:relative;transition:border-color .3s, box-shadow .3s;transform-style:preserve-3d;
+  }
+  .mission-card:hover{border-color:var(--cyan);box-shadow:0 0 30px rgba(0,230,255,0.18);}
+  .mission-id{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--amber);letter-spacing:2px;margin-bottom:14px;}
+  .mission-name{font-family:'Orbitron',sans-serif;font-size:19px;color:var(--text-hud);margin-bottom:12px;letter-spacing:1px;}
+  .mission-desc{font-size:15px;color:var(--text-dim);line-height:1.6;margin-bottom:20px;font-family:'Rajdhani',sans-serif;}
+  .mission-stack{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;}
+  .mission-stack span{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--cyan);border:1px solid var(--line);padding:4px 10px;letter-spacing:1px;}
+  .mission-status{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--cyan);display:flex;align-items:center;gap:8px;}
+
+  /* ---------- modal ---------- */
+  #modal-overlay{
+    position:fixed;inset:0;background:rgba(1,5,10,0.88);backdrop-filter:blur(6px);
+    z-index:2000;display:none;align-items:center;justify-content:center;padding:30px;
+  }
+  #modal-overlay.open{display:flex;}
+  .modal-box{
+    width:min(680px,92vw);max-height:80vh;overflow-y:auto;background:var(--bg-panel-solid);
+    border:1px solid var(--cyan);box-shadow:0 0 60px rgba(0,230,255,0.25);padding:40px;position:relative;
+  }
+  .modal-close{position:absolute;top:18px;right:22px;color:var(--cyan);background:none;border:none;font-size:20px;cursor:pointer;font-family:'Share Tech Mono',monospace;}
+  .modal-scan{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);animation:scan 2.4s linear infinite;}
+  @keyframes scan{0%{transform:translateY(0);}100%{transform:translateY(400px);}}
+
+  /* ---------- contact / terminal ---------- */
+  .terminal{
+    max-width:720px;margin:0 auto;border:1px solid var(--line);background:var(--bg-panel);
+  }
+  .terminal-bar{
+    display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line);
+    font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--text-dim);letter-spacing:1px;
+  }
+  .terminal-dot{width:9px;height:9px;border-radius:50%;}
+  .terminal-body{padding:26px 28px 30px;font-family:'Share Tech Mono',monospace;font-size:13px;color:var(--text-hud);min-height:260px;}
+  .term-line{margin-bottom:10px;line-height:1.7;}
+  .term-line .prompt{color:var(--cyan);margin-right:8px;}
+  .term-input-row{display:flex;align-items:center;margin-top:18px;}
+  .term-input-row .prompt{color:var(--cyan);margin-right:8px;}
+  #term-input{
+    flex:1;background:transparent;border:none;outline:none;color:var(--text-hud);
+    font-family:'Share Tech Mono',monospace;font-size:13px;caret-color:var(--cyan);
+  }
+  .term-form{display:flex;flex-direction:column;gap:14px;margin-top:20px;}
+  .term-field label{display:block;font-size:10px;color:var(--text-dim);letter-spacing:2px;margin-bottom:6px;text-transform:uppercase;}
+  .term-field input, .term-field textarea{
+    width:100%;background:rgba(0,230,255,0.04);border:1px solid var(--line);color:var(--text-hud);
+    padding:10px 12px;font-family:'Share Tech Mono',monospace;font-size:13px;outline:none;resize:none;
+  }
+  .term-field input:focus, .term-field textarea:focus{border-color:var(--cyan);box-shadow:0 0 12px rgba(0,230,255,0.2);}
+  .transmit-btn{
+    align-self:flex-start;margin-top:6px;background:rgba(0,230,255,0.1);border:1px solid var(--cyan);
+    color:var(--cyan);padding:12px 28px;font-family:'Share Tech Mono',monospace;letter-spacing:2px;
+    font-size:12px;cursor:pointer;text-transform:uppercase;transition:.3s;
+  }
+  .transmit-btn:hover{background:rgba(0,230,255,0.22);box-shadow:0 0 18px rgba(0,230,255,0.3);}
+  .transmit-response{margin-top:16px;font-size:12px;color:var(--cyan);letter-spacing:1px;min-height:18px;}
+
+  footer{
+    position:relative;z-index:5;padding:34px 8vw;border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;
+    font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--text-dim);letter-spacing:1px;
+  }
+  footer a{color:var(--cyan);text-decoration:none;margin-left:18px;}
+
+  @media (max-width:820px){
+    .about-grid{grid-template-columns:1fr;}
+    .nav-links{display:none;}
+    section{padding:90px 6vw;}
+  }
+</style>
+</head>
+<body>
+
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+
+<div id="loader">
+  <div class="loader-ring"></div>
+  <div id="loader-pct">00%</div>
+  <div id="loader-label">Initializing HUD Interface</div>
+</div>
+
+<canvas id="bg-canvas"></canvas>
+<div class="grid-overlay"></div>
+<div class="scanlines"></div>
+<div class="vignette"></div>
+
+<nav>
+  <div class="logo">E<span>.REYES</span> // MK VII</div>
+  <ul class="nav-links">
+    <li><a href="#hero">Home</a></li>
+    <li><a href="#about">Profile</a></li>
+    <li><a href="#skills">Arsenal</a></li>
+    <li><a href="#projects">Missions</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-status"><span class="pulse-dot"></span> SYSTEM ONLINE</div>
+</nav>
+
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hud-corner tl"></div>
+  <div class="hud-corner tr"></div>
+  <div class="hud-corner bl"></div>
+  <div class="hud-corner br"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">// Full-Stack Engineer &nbsp;·&nbsp; Systems Architect</div>
+    <h1 class="hero-title">ETHAN <span class="glitch-accent">REYES</span></h1>
+    <p class="hero-sub">Designing intelligent interfaces and resilient systems.<br>Currently building at the intersection of AI and product engineering.</p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn">View Missions</a>
+      <a href="#contact" class="btn ghost">Open Channel</a>
+    </div>
+  </div>
+  <div class="scroll-cue">SCROLL<div class="bar"></div></div>
+</section>
+
+<section id="about">
+  <div class="section-head reveal">
+    <div class="section-eyebrow">01 // Profile</div>
+    <h2 class="section-title">Operator Dossier</h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>I'm a <span class="highlight">full-stack engineer</span> who treats every product like a system that has to survive contact with real users — instrumented, resilient, and built to be understood at a glance.</p>
+      <p>Over the last several years I've shipped <span class="highlight">production systems</span> across fintech, developer tooling, and applied AI — architecting backends, building interfaces that feel alive, and closing the loop between the two.</p>
+      <p>Off duty: reverse-engineering old hardware, contributing to open-source robotics tooling, and drinking more coffee than any HUD would recommend.</p>
+    </div>
+    <div class="readout reveal">
+      <div class="readout-row"><span>DESIGNATION</span><span>ETHAN REYES</span></div>
+      <div class="readout-row"><span>ROLE</span><span>SR. FULL-STACK ENGINEER</span></div>
+      <div class="readout-row"><span>BASE OF OPS</span><span>REMOTE / GLOBAL</span></div>
+      <div class="readout-row"><span>EXPERIENCE</span><span>7+ YEARS</span></div>
+      <div class="readout-row"><span>CLEARANCE</span><span>FULL-STACK / AI</span></div>
+      <div class="readout-row"><span>STATUS</span><span>OPEN TO WORK</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="section-head reveal">
+    <div class="section-eyebrow">02 // Arsenal</div>
+    <h2 class="section-title">Systems &amp; Capabilities</h2>
+  </div>
+  <div class="reactor-grid" id="reactor-grid">
+    <!-- injected -->
+  </div>
+</section>
+
+<section id="projects">
+  <div class="section-head reveal">
+    <div class="section-eyebrow">03 // Missions</div>
+    <h2 class="section-title">Deployed Operations</h2>
+  </div>
+  <div class="mission-grid" id="mission-grid">
+    <!-- injected -->
+  </div>
+</section>
+
+<section id="contact">
+  <div class="section-head reveal">
+    <div class="section-eyebrow">04 // Channel</div>
+    <h2 class="section-title">Open a Transmission</h2>
+  </div>
+  <div class="terminal reveal">
+    <div class="terminal-bar">
+      <span class="terminal-dot" style="background:#ff5f57;"></span>
+      <span class="terminal-dot" style="background:#febc2e;"></span>
+      <span class="terminal-dot" style="background:#28c840;"></span>
+      &nbsp;&nbsp;jarvis-uplink://secure-channel
+    </div>
+    <div class="terminal-body">
+      <div class="term-line"><span class="prompt">&gt;</span>CHANNEL ESTABLISHED. AWAITING INPUT...</div>
+      <div class="term-line"><span class="prompt">&gt;</span>Fill in the fields below to transmit a message.</div>
+      <form class="term-form" id="contact-form">
+        <div class="term-field">
+          <label>Identity</label>
+          <input type="text" id="f-name" placeholder="Your name" required>
+        </div>
+        <div class="term-field">
+          <label>Return Frequency</label>
+          <input type="email" id="f-email" placeholder="you@domain.com" required>
+        </div>
+        <div class="term-field">
+          <label>Message</label>
+          <textarea id="f-msg" rows="4" placeholder="Type your transmission..." required></textarea>
+        </div>
+        <button type="submit" class="transmit-btn">Transmit</button>
+        <div class="transmit-response" id="transmit-response"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>© 2026 ETHAN REYES — ALL SYSTEMS NOMINAL</div>
+  <div>
+    <a href="#hero">Home</a>
+    <a href="#projects">Missions</a>
+    <a href="#contact">Contact</a>
+  </div>
+</footer>
+
+<div id="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-scan"></div>
+    <button class="modal-close" id="modal-close">[ X ] CLOSE</button>
+    <div id="modal-content"></div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+/* ============ CUSTOM CURSOR ============ */
+const dot = document.getElementById('cursor-dot');
+const ring = document.getElementById('cursor-ring');
+let mx=0,my=0, rx=0, ry=0;
+window.addEventListener('mousemove', e=>{
+  mx=e.clientX; my=e.clientY;
+  dot.style.left=mx+'px'; dot.style.top=my+'px';
+});
+function animateRing(){
+  rx += (mx-rx)*0.18; ry += (my-ry)*0.18;
+  ring.style.left=rx+'px'; ring.style.top=ry+'px';
+  requestAnimationFrame(animateRing);
+}
+animateRing();
+document.querySelectorAll('a, button, .mission-card, input, textarea').forEach(el=>{
+  el.addEventListener('mouseenter', ()=>{ring.style.transform='translate(-50%,-50%) scale(1.6)'; dot.style.background='#ffb02e';});
+  el.addEventListener('mouseleave', ()=>{ring.style.transform='translate(-50%,-50%) scale(1)'; dot.style.background='#00e6ff';});
+});
+
+/* ============ LOADER ============ */
+const loader = document.getElementById('loader');
+const pctEl = document.getElementById('loader-pct');
+let pct = 0;
+const loadInterval = setInterval(()=>{
+  pct += Math.floor(Math.random()*12)+4;
+  if(pct>=100){ pct=100; clearInterval(loadInterval);
+    setTimeout(()=>{ loader.classList.add('hidden'); }, 350);
+  }
+  pctEl.textContent = String(pct).padStart(2,'0')+'%';
+}, 140);
+
+/* ============ BACKGROUND STARFIELD (2D canvas) ============ */
+const bgCanvas = document.getElementById('bg-canvas');
+const bctx = bgCanvas.getContext('2d');
+let W,H,particles=[];
+function sizeBg(){
+  W = bgCanvas.width = window.innerWidth;
+  H = bgCanvas.height = window.innerHeight * (document.body.scrollHeight/window.innerHeight);
+  H = Math.min(H, document.body.scrollHeight);
+  bgCanvas.height = document.body.scrollHeight;
+  H = document.body.scrollHeight;
+}
+function initParticles(){
+  particles = [];
+  const count = Math.floor((window.innerWidth*document.body.scrollHeight)/9000);
+  for(let i=0;i<count;i++){
+    particles.push({
+      x: Math.random()*W, y: Math.random()*H,
+      r: Math.random()*1.4+0.3,
+      speed: Math.random()*0.15+0.02,
+      alpha: Math.random()*0.6+0.2
+    });
+  }
+}
+function drawBg(){
+  bctx.clearRect(0,0,W,H);
+  bctx.fillStyle = '#00e6ff';
+  for(const p of particles){
+    bctx.globalAlpha = p.alpha;
+    bctx.beginPath();
+    bctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    bctx.fill();
+    p.y += p.speed;
+    if(p.y > H) p.y = 0;
+  }
+  bctx.globalAlpha=1;
+  requestAnimationFrame(drawBg);
+}
+window.addEventListener('resize', ()=>{ sizeBg(); initParticles(); });
+setTimeout(()=>{ sizeBg(); initParticles(); drawBg(); }, 50);
+
+/* ============ THREE.JS HERO CORE ============ */
+let scene, camera, renderer, core, ringGroup, mouseX=0, mouseY=0;
+function initHero3D(){
+  const canvas = document.getElementById('hero-canvas');
+  scene = new THREE.Scene();
+  camera = new THREE.PerspectiveCamera(55, window.innerWidth/window.innerHeight, 0.1, 1000);
+  camera.position.z = 9;
+
+  renderer = new THREE.WebGLRenderer({canvas, alpha:true, antialias:true});
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+
+  const cyan = 0x00e6ff;
+  const amber = 0xffb02e;
+
+  // core wireframe icosahedron
+  const coreGeo = new THREE.IcosahedronGeometry(1.7, 1);
+  const coreMat = new THREE.MeshBasicMaterial({color:cyan, wireframe:true, transparent:true, opacity:0.85});
+  core = new THREE.Mesh(coreGeo, coreMat);
+  scene.add(core);
+
+  // inner glow sphere
+  const innerGeo = new THREE.SphereGeometry(1.15, 32, 32);
+  const innerMat = new THREE.MeshBasicMaterial({color:cyan, transparent:true, opacity:0.12});
+  const inner = new THREE.Mesh(innerGeo, innerMat);
+  scene.add(inner);
+
+  // orbiting rings
+  ringGroup = new THREE.Group();
+  const ringData = [
+    {r:2.6, tube:0.01, color:cyan, rot:'x'},
+    {r:3.1, tube:0.008, color:amber, rot:'y'},
+    {r:3.6, tube:0.006, color:cyan, rot:'z'},
+  ];
+  ringData.forEach(rd=>{
+    const geo = new THREE.TorusGeometry(rd.r, rd.tube, 8, 100);
+    const mat = new THREE.MeshBasicMaterial({color:rd.color, transparent:true, opacity:0.5});
+    const mesh = new THREE.Mesh(geo, mat);
+    mesh.userData.axis = rd.rot;
+    if(rd.rot==='x') mesh.rotation.x = Math.PI/2.3;
+    if(rd.rot==='y') mesh.rotation.y = Math.PI/2.5;
+    ringGroup.add(mesh);
+  });
+  scene.add(ringGroup);
+
+  // particle points around core
+  const pGeo = new THREE.BufferGeometry();
+  const pCount = 400;
+  const positions = new Float32Array(pCount*3);
+  for(let i=0;i<pCount;i++){
+    const r = 4.2 + Math.random()*2.5;
+    const theta = Math.random()*Math.PI*2;
+    const phi = Math.acos((Math.random()*2)-1);
+    positions[i*3] = r*Math.sin(phi)*Math.cos(theta);
+    positions[i*3+1] = r*Math.sin(phi)*Math.sin(theta);
+    positions[i*3+2] = r*Math.cos(phi);
+  }
+  pGeo.setAttribute('position', new THREE.BufferAttribute(positions,3));
+  const pMat = new THREE.PointsMaterial({color:cyan, size:0.02, transparent:true, opacity:0.6});
+  const points = new THREE.Points(pGeo, pMat);
+  scene.add(points);
+
+  window.addEventListener('mousemove', e=>{
+    mouseX = (e.clientX/window.innerWidth - 0.5) * 2;
+    mouseY = (e.clientY/window.innerHeight - 0.5) * 2;
+  });
+  window.addEventListener('resize', ()=>{
+    camera.aspect = window.innerWidth/window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+
+  animateHero();
+}
+function animateHero(){
+  requestAnimationFrame(animateHero);
+  core.rotation.y += 0.003;
+  core.rotation.x += 0.0012;
+  ringGroup.children.forEach((m,i)=>{
+    m.rotation.z += 0.0016 * (i%2===0?1:-1);
+  });
+  camera.position.x += (mouseX*1.2 - camera.position.x)*0.03;
+  camera.position.y += (-mouseY*1.2 - camera.position.y)*0.03;
+  camera.lookAt(scene.position);
+  renderer.render(scene, camera);
+}
+initHero3D();
+
+/* ============ SCROLL REVEAL ============ */
+const revealEls = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(en=>{ if(en.isIntersecting) en.target.classList.add('in'); });
+},{threshold:0.15});
+revealEls.forEach(el=>io.observe(el));
+
+/* ============ SKILLS DATA ============ */
+const skills = [
+  {name:'JavaScript / TypeScript', pct:96, tag:'CORE LANGUAGE'},
+  {name:'React / Next.js', pct:93, tag:'FRONTEND SYSTEM'},
+  {name:'Node.js / APIs', pct:90, tag:'BACKEND SYSTEM'},
+  {name:'Python / AI Tooling', pct:87, tag:'APPLIED ML'},
+  {name:'Cloud / DevOps (AWS)', pct:82, tag:'INFRASTRUCTURE'},
+  {name:'Three.js / WebGL', pct:78, tag:'REAL-TIME GRAPHICS'},
+];
+const grid = document.getElementById('reactor-grid');
+skills.forEach(s=>{
+  const card = document.createElement('div');
+  card.className = 'reactor-card';
+  card.innerHTML = `
+    <div class="reactor-top">
+      <span class="reactor-name">${s.name}</span>
+      <span class="reactor-pct">${s.pct}%</span>
+    </div>
+    <div class="reactor-bar-track"><div class="reactor-bar-fill" data-pct="${s.pct}"></div></div>
+    <div class="reactor-tag">${s.tag}</div>
+  `;
+  grid.appendChild(card);
+});
+const barIo = new IntersectionObserver((entries)=>{
+  entries.forEach(en=>{
+    if(en.isIntersecting){
+      const fill = en.target.querySelector('.reactor-bar-fill');
+      fill.style.width = fill.dataset.pct + '%';
+    }
+  });
+},{threshold:0.4});
+document.querySelectorAll('.reactor-card').forEach(c=>barIo.observe(c));
+
+/* ============ PROJECTS DATA ============ */
+const missions = [
+  {
+    id:'MK-01', name:'Aegis — Realtime Fraud Engine',
+    desc:'A streaming risk-scoring platform processing 2M+ transactions/day with sub-100ms decisioning.',
+    stack:['Node.js','Kafka','Redis','React'],
+    status:'DEPLOYED', detail:'Built the core scoring pipeline from scratch: ingest, feature computation, and a rules + ML hybrid decision layer. Cut fraud losses by 34% while keeping false-positive rate under 1.2%. Instrumented with full observability so ops could trace any decision in seconds.'
+  },
+  {
+    id:'MK-02', name:'Orbit — Dev Tooling Suite',
+    desc:'Internal CLI + dashboard for managing microservice deployments across 40+ repos.',
+    stack:['TypeScript','Go','Docker','Postgres'],
+    status:'ACTIVE', detail:'Replaced a tangle of manual scripts with a single unified tool: one command to build, test, and deploy any service, with a live dashboard showing deployment health across the fleet. Adopted by every engineering team within two months.'
+  },
+  {
+    id:'MK-03', name:'Lumen — AI Research Assistant',
+    desc:'A retrieval-augmented assistant that helps analysts query internal knowledge bases in natural language.',
+    stack:['Python','LangChain','Vector DB','Next.js'],
+    status:'BETA', detail:'Designed the retrieval architecture and prompt orchestration layer, plus a citation system so every answer traces back to its source document. Currently in beta with the research team, cutting average lookup time from ~15 minutes to under 30 seconds.'
+  },
+];
+const mgrid = document.getElementById('mission-grid');
+missions.forEach(m=>{
+  const card = document.createElement('div');
+  card.className = 'mission-card';
+  card.innerHTML = `
+    <div class="mission-id">${m.id} // ${m.status}</div>
+    <div class="mission-name">${m.name}</div>
+    <div class="mission-desc">${m.desc}</div>
+    <div class="mission-stack">${m.stack.map(s=>`<span>${s}</span>`).join('')}</div>
+    <div class="mission-status"><span class="pulse-dot" style="width:6px;height:6px;"></span>${m.status}</div>
+  `;
+  card.addEventListener('mousemove', e=>{
+    const r = card.getBoundingClientRect();
+    const px = (e.clientX - r.left)/r.width - 0.5;
+    const py = (e.clientY - r.top)/r.height - 0.5;
+    card.style.transform = `perspective(600px) rotateX(${py*-8}deg) rotateY(${px*8}deg) translateZ(6px)`;
+  });
+  card.addEventListener('mouseleave', ()=>{ card.style.transform=''; });
+  card.addEventListener('click', ()=>openModal(m));
+  mgrid.appendChild(card);
+});
+
+/* ============ MODAL ============ */
+const overlay = document.getElementById('modal-overlay');
+const modalContent = document.getElementById('modal-content');
+function openModal(m){
+  modalContent.innerHTML = `
+    <div class="mission-id">${m.id} // FULL BRIEF</div>
+    <div class="mission-name" style="font-size:24px;margin-bottom:16px;">${m.name}</div>
+    <div style="font-family:'Share Tech Mono',monospace;font-size:13px;color:var(--text-dim);line-height:1.8;margin-bottom:20px;">${m.detail}</div>
+    <div class="mission-stack">${m.stack.map(s=>`<span>${s}</span>`).join('')}</div>
+  `;
+  overlay.classList.add('open');
+}
+document.getElementById('modal-close').addEventListener('click', ()=>overlay.classList.remove('open'));
+overlay.addEventListener('click', e=>{ if(e.target===overlay) overlay.classList.remove('open'); });
+
+/* ============ CONTACT TERMINAL ============ */
+const form = document.getElementById('contact-form');
+const responseEl = document.getElementById('transmit-response');
+form.addEventListener('submit', e=>{
+  e.preventDefault();
+  responseEl.textContent = '> TRANSMITTING...';
+  let dots = 0;
+  const iv = setInterval(()=>{
+    dots++;
+    responseEl.textContent = '> TRANSMITTING' + '.'.repeat(dots%4);
+  }, 200);
+  setTimeout(()=>{
+    clearInterval(iv);
+    responseEl.textContent = '> MESSAGE TRANSMITTED SUCCESSFULLY. STAND BY FOR RESPONSE.';
+    form.reset();
+  }, 1400);
+});
+</script>
+</body>
 </html>
