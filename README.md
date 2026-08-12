@@ -1,32 +1,51 @@
-# React + TypeScript + Vite
+# 🌌 3D Interactive React Portfolio — Jaswanth A
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A high-performance, spatial 3D interactive web portfolio built with **React 19**, **Three.js**, **Tailwind CSS 4**, and **TypeScript**.
 
-Currently, two official plugins are available:
+![React](https://img.shields.io/badge/React-19.0-61DAFB?style=for-the-badge&logo=react)
+![Three.js](https://img.shields.io/badge/Three.js-WebGL-black?style=for-the-badge&logo=three.js)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4.0-38BDF8?style=for-the-badge&logo=tailwind-css)
+![TypeScript](https://img.shields.io/badge/TypeScript-v6.0-3178C6?style=for-the-badge&logo=typescript)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 🚀 Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- 🛸 **Interactive 3D Viewport**: Procedural 3D shape orbits (Icosahedrons, TorusKnots, Octahedrons) powered by React Three Fiber & Three.js.
+- ⚡ **Flagship Project Showcases**: Deep dive into the **Smart Classroom & Timetable Scheduler**, **Java OOP Suite**, and **UI/UX Systems**.
+- 💎 **Glassmorphism UI**: Glowing HUD borders, HUD telemetry gauges, and arc blue / gold dark-mode aesthetic.
+- 🎵 **Audio Feedback**: Interactive spatial audio telemetry on navigation & project selection.
+- 📱 **Fully Responsive**: Mobile-friendly viewport scaling and GPU optimization.
 
-## Expanding the Oxlint configuration
+---
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+## 💻 Tech Stack
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+- **Frontend**: React 19, TypeScript, Vite
+- **3D Graphics & Animations**: Three.js, `@react-three/fiber`, `@react-three/drei`, Framer Motion, GSAP
+- **Styling**: Tailwind CSS 4, Glassmorphic Design System
+- **Icons**: Lucide React
+
+---
+
+## 🛠️ Local Development
+
+```bash
+# 1. Install dependencies
+npm install
+
+# 2. Start local development server
+npm run dev
+
+# 3. Build for production
+npx vite build
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+---
+
+## 👨‍💻 Developer Information
+
+- **Name**: Jaswanth A
+- **Role**: B.E ECE Student | Full-Stack Web Developer | Java & EdTech AI Enthusiast | UI/UX Designer
+- **GitHub**: [@jaswanth-jas](https://github.com/jaswanth-jas)
+- **Flagship Project**: [Smart Classroom & Timetable Scheduler](https://github.com/jaswanth-jas/smart-classroom-and-timetable-scheduler-using-AI)

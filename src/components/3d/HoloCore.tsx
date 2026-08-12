@@ -8,95 +8,87 @@ interface HoloCoreProps {
 }
 
 export const HoloCore: React.FC<HoloCoreProps> = ({
-  shape = 'icosahedron',
-  color = '#ffd700',
+  shape = 'torusKnot',
+  color = '#38bdf8',
 }) => {
   const outerGroupRef = useRef<THREE.Group>(null!);
   const innerCoreRef = useRef<THREE.Mesh>(null!);
-  const arcRing1Ref = useRef<THREE.Mesh>(null!);
-  const arcRing2Ref = useRef<THREE.Mesh>(null!);
-  const arcRing3Ref = useRef<THREE.Mesh>(null!);
+  const ring1Ref = useRef<THREE.Mesh>(null!);
+  const ring2Ref = useRef<THREE.Mesh>(null!);
 
   useFrame((state) => {
     const t = state.clock.getElapsedTime();
 
     if (outerGroupRef.current) {
-      const mouseX = state.pointer.x * 0.45;
-      const mouseY = state.pointer.y * 0.45;
+      const mouseX = state.pointer.x * 0.35;
+      const mouseY = state.pointer.y * 0.35;
 
       outerGroupRef.current.rotation.y = THREE.MathUtils.lerp(
         outerGroupRef.current.rotation.y,
-        t * 0.25 + mouseX,
+        t * 0.2 + mouseX,
         0.05
       );
       outerGroupRef.current.rotation.x = THREE.MathUtils.lerp(
         outerGroupRef.current.rotation.x,
-        Math.sin(t * 0.35) * 0.15 - mouseY,
+        Math.sin(t * 0.3) * 0.1 - mouseY,
         0.05
       );
     }
 
     if (innerCoreRef.current) {
-      innerCoreRef.current.rotation.y = -t * 0.6;
-      innerCoreRef.current.rotation.z = t * 0.4;
-      const scale = 1 + Math.sin(t * 2.5) * 0.08;
+      innerCoreRef.current.rotation.y = -t * 0.5;
+      innerCoreRef.current.rotation.z = t * 0.3;
+      const scale = 1 + Math.sin(t * 2) * 0.05;
       innerCoreRef.current.scale.set(scale, scale, scale);
     }
 
-    if (arcRing1Ref.current) arcRing1Ref.current.rotation.x = t * 0.7;
-    if (arcRing2Ref.current) arcRing2Ref.current.rotation.y = t * 0.5;
-    if (arcRing3Ref.current) arcRing3Ref.current.rotation.z = t * 0.6;
+    if (ring1Ref.current) ring1Ref.current.rotation.x = t * 0.4;
+    if (ring2Ref.current) ring2Ref.current.rotation.y = t * 0.3;
   });
 
   return (
     <group ref={outerGroupRef}>
-      {/* Outer Stark Wireframe Geometry */}
+      {/* Outer Apple Wireframe Node */}
       <mesh>
-        {shape === 'icosahedron' && <icosahedronGeometry args={[2.3, 2]} />}
-        {shape === 'torusKnot' && <torusKnotGeometry args={[1.7, 0.45, 128, 32]} />}
-        {shape === 'octahedron' && <octahedronGeometry args={[2.3, 2]} />}
+        {shape === 'icosahedron' && <icosahedronGeometry args={[2.2, 2]} />}
+        {shape === 'torusKnot' && <torusKnotGeometry args={[1.6, 0.4, 128, 32]} />}
+        {shape === 'octahedron' && <octahedronGeometry args={[2.2, 2]} />}
         <meshStandardMaterial
           color={color}
           wireframe
           transparent
-          opacity={0.7}
+          opacity={0.65}
           emissive={color}
-          emissiveIntensity={0.8}
+          emissiveIntensity={0.6}
         />
       </mesh>
 
-      {/* Inner Plasma Arc Core */}
+      {/* Inner Glowing Glass Core */}
       <mesh ref={innerCoreRef}>
-        <icosahedronGeometry args={[1.2, 1]} />
+        <icosahedronGeometry args={[1.1, 1]} />
         <meshStandardMaterial
-          color="#00f3ff"
-          emissive="#00f3ff"
-          emissiveIntensity={1.8}
+          color="#a855f7"
+          emissive="#a855f7"
+          emissiveIntensity={1.2}
           roughness={0.1}
-          metalness={0.9}
+          metalness={0.8}
         />
       </mesh>
 
-      {/* Concentric Arc Reactor Gyro Rings */}
-      <mesh ref={arcRing1Ref}>
-        <torusGeometry args={[2.9, 0.025, 16, 100]} />
-        <meshBasicMaterial color="#ffd700" wireframe transparent opacity={0.8} />
+      {/* Concentric Glass Orbits */}
+      <mesh ref={ring1Ref}>
+        <torusGeometry args={[2.8, 0.02, 16, 100]} />
+        <meshBasicMaterial color="#38bdf8" wireframe transparent opacity={0.7} />
       </mesh>
 
-      <mesh ref={arcRing2Ref}>
-        <torusGeometry args={[3.3, 0.03, 16, 100]} />
-        <meshBasicMaterial color="#00f3ff" wireframe transparent opacity={0.7} />
+      <mesh ref={ring2Ref}>
+        <torusGeometry args={[3.2, 0.02, 16, 100]} />
+        <meshBasicMaterial color="#a855f7" wireframe transparent opacity={0.6} />
       </mesh>
 
-      <mesh ref={arcRing3Ref}>
-        <torusGeometry args={[3.7, 0.02, 16, 100]} />
-        <meshBasicMaterial color="#ff1a1a" wireframe transparent opacity={0.6} />
-      </mesh>
-
-      {/* Stark Arc Reactor Lights */}
-      <pointLight color="#ffd700" intensity={5} distance={10} />
-      <pointLight color="#00f3ff" intensity={4} distance={8} />
-      <pointLight color="#ff1a1a" intensity={3} distance={6} />
+      {/* Soft Ambient Lights */}
+      <pointLight color="#38bdf8" intensity={4} distance={10} />
+      <pointLight color="#a855f7" intensity={4} distance={8} />
     </group>
   );
 };

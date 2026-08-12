@@ -1,150 +1,219 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @layer base {
   :root {
-    --color-gold: #ffd700;
-    --color-amber: #ff9900;
-    --color-arc-cyan: #00f3ff;
-    --color-crimson: #ff1a1a;
-    --color-iron-red: #e60000;
+    --web3-bg: #050811;
+    --apple-font: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+    --web3-font: 'Space Grotesk', 'Inter', sans-serif;
+    --apple-script: 'Dancing Script', cursive;
   }
 
   body {
-    background-color: #030712;
-    font-family: 'Rajdhani', sans-serif;
-    color: #f1f5f9;
+    background-color: var(--web3-bg);
+    font-family: var(--apple-font);
+    color: #f8fafc;
+    overflow-x: hidden;
+    letter-spacing: -0.01em;
   }
 
-  h1, h2, h3, .font-orbitron {
-    font-family: 'Orbitron', sans-serif;
-  }
-
-  code, pre, .font-mono {
-    font-family: 'Share Tech Mono', 'JetBrains Mono', monospace;
+  h1, h2, h3, h4, .font-web3 {
+    font-family: var(--web3-font);
+    letter-spacing: -0.03em;
   }
 }
 
-/* CRT & Holographic HUD Overlay */
-.crt-overlay {
-  background: linear-gradient(
-    rgba(18, 16, 16, 0) 50%, 
-    rgba(0, 0, 0, 0.25) 50%
-  ), linear-gradient(
-    90deg,
-    rgba(255, 215, 0, 0.02),
-    rgba(0, 243, 255, 0.02),
-    rgba(255, 26, 26, 0.02)
-  );
-  background-size: 100% 4px, 6px 100%;
+/* Background Ambient Orbs for Figma & Web3 Glass Contrast */
+.glass-mesh-bg {
+  position: fixed;
+  inset: 0;
   pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
 }
 
-/* J.A.R.V.I.S. Arc Reactor HUD Grids and Glows */
-.hud-grid {
-  background-image: 
-    linear-gradient(to right, rgba(0, 243, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 215, 0, 0.05) 1px, transparent 1px);
-  background-size: 40px 40px;
+.glass-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(110px);
+  opacity: 0.38;
+  animation: orbFloat 18s ease-in-out infinite alternate;
 }
 
-/* Stark Glow Utilities */
-.glow-gold {
-  box-shadow: 0 0 15px rgba(255, 215, 0, 0.5), inset 0 0 15px rgba(255, 215, 0, 0.2);
+.orb-1 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, #38bdf8, #6366f1);
+  top: -10%;
+  left: 10%;
 }
 
-.glow-gold-lg {
-  box-shadow: 0 0 35px rgba(255, 215, 0, 0.7), inset 0 0 25px rgba(255, 215, 0, 0.35);
+.orb-2 {
+  width: 650px;
+  height: 650px;
+  background: radial-gradient(circle, #c084fc, #ec4899);
+  bottom: 5%;
+  right: -5%;
+  animation-delay: -6s;
 }
 
-.glow-arc {
-  box-shadow: 0 0 15px rgba(0, 243, 255, 0.5), inset 0 0 15px rgba(0, 243, 255, 0.25);
+.orb-3 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, #10b981, #38bdf8);
+  top: 40%;
+  left: 45%;
+  animation-delay: -12s;
 }
 
-.glow-crimson {
-  box-shadow: 0 0 15px rgba(255, 26, 26, 0.5), inset 0 0 15px rgba(255, 26, 26, 0.2);
+@keyframes orbFloat {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(50px, 30px) scale(1.08); }
+  100% { transform: translate(-30px, 60px) scale(0.95); }
 }
 
-.text-glow-gold {
-  text-shadow: 0 0 10px rgba(255, 215, 0, 0.9), 0 0 20px rgba(255, 183, 0, 0.5);
-}
-
-.text-glow-arc {
-  text-shadow: 0 0 10px rgba(0, 243, 255, 0.9), 0 0 20px rgba(0, 243, 255, 0.5);
-}
-
-.text-glow-crimson {
-  text-shadow: 0 0 10px rgba(255, 26, 26, 0.9), 0 0 20px rgba(255, 26, 26, 0.5);
-}
-
-/* Stark Glass Panel */
-.glass-panel {
-  background: rgba(7, 12, 24, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 215, 0, 0.25);
-}
-
-.glass-panel-hover {
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.glass-panel-hover:hover {
-  border-color: rgba(255, 215, 0, 0.8);
-  box-shadow: 0 0 30px rgba(255, 215, 0, 0.35);
-  transform: translateY(-2px);
-}
-
-/* Stark Brackets */
-.corner-brackets {
+/* Web3 Bento Grid & Figma Glassmorphism Spec */
+.apple-glass, .figma-glass, .web3-glass {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
+  backdrop-filter: blur(35px) saturate(180%);
+  -webkit-backdrop-filter: blur(35px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 
+    0 30px 60px -12px rgba(0, 0, 0, 0.5),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.35);
   position: relative;
+  overflow: hidden;
 }
-.corner-brackets::before,
-.corner-brackets::after {
+
+.web3-bento-card {
+  background: linear-gradient(
+    145deg,
+    rgba(15, 23, 42, 0.6) 0%,
+    rgba(30, 41, 59, 0.3) 100%
+  );
+  backdrop-filter: blur(30px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 1.75rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.web3-bento-card:hover {
+  border-color: rgba(56, 189, 248, 0.4);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 0 0 30px rgba(56, 189, 248, 0.25);
+  transform: translateY(-6px);
+}
+
+.figma-glass::before {
   content: '';
   position: absolute;
-  width: 8px;
-  height: 8px;
-  border-color: rgba(255, 215, 0, 0.9);
-  border-style: solid;
+  top: 0;
+  left: -50%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.08) 50%,
+    transparent 100%
+  );
+  transform: skewX(-25deg);
   pointer-events: none;
-}
-.corner-brackets::before {
-  top: -2px;
-  left: -2px;
-  border-width: 2px 0 0 2px;
-}
-.corner-brackets::after {
-  bottom: -2px;
-  right: -2px;
-  border-width: 0 2px 2px 0;
+  transition: transform 0.8s ease;
 }
 
-/* Iron Man Arc Pulse Animation */
-@keyframes arcPulse {
-  0%, 100% {
-    box-shadow: 0 0 20px rgba(0, 243, 255, 0.6), 0 0 40px rgba(255, 215, 0, 0.4);
+.apple-glass-hover:hover::before, .figma-glass:hover::before {
+  transform: skewX(-25deg) translateX(50%);
+}
+
+.apple-glass-hover {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.apple-glass-hover:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.18) 0%,
+    rgba(255, 255, 255, 0.06) 100%
+  );
+  border-color: rgba(255, 255, 255, 0.35);
+  box-shadow: 
+    0 35px 70px -15px rgba(0, 0, 0, 0.6),
+    0 0 35px rgba(56, 189, 248, 0.25),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.5);
+  transform: translateY(-8px) scale(1.01);
+}
+
+/* Floating Apple Navigation Dock */
+.apple-dock {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.14) 0%,
+    rgba(255, 255, 255, 0.04) 100%
+  );
+  backdrop-filter: blur(40px) saturate(190%);
+  -webkit-backdrop-filter: blur(40px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 9999px;
+  box-shadow: 
+    0 25px 50px rgba(0, 0, 0, 0.5),
+    inset 0 1px 1px rgba(255, 255, 255, 0.4);
+}
+
+/* Multilingual Cursive "Hello" Animation */
+.apple-hello-text {
+  font-family: var(--apple-script);
+  background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 40%, #38bdf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: helloGlow 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes helloGlow {
+  0% {
+    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.5));
+    transform: scale(1);
   }
-  50% {
-    box-shadow: 0 0 40px rgba(0, 243, 255, 0.9), 0 0 70px rgba(255, 215, 0, 0.7);
+  100% {
+    filter: drop-shadow(0 0 35px rgba(56, 189, 248, 0.85));
+    transform: scale(1.05);
   }
 }
 
-.arc-pulse {
-  animation: arcPulse 3s infinite ease-in-out;
+/* Gradient Text */
+.apple-gradient-text {
+  background: linear-gradient(135deg, #38bdf8 0%, #c084fc 50%, #fb7185 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-/* Custom Scrollbar */
+/* Apple Badge Pill */
+.apple-pill {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 9999px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+/* Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
 }
+
 ::-webkit-scrollbar-track {
-  background: #030712;
+  background: #050811;
 }
+
 ::-webkit-scrollbar-thumb {
-  background: #ffd700;
-  border-radius: 3px;
-  box-shadow: 0 0 10px #ffd700;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 9999px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background: #ff1a1a;
+  background: rgba(255, 255, 255, 0.35);
 }

@@ -1,238 +1,204 @@
 import React, { useState } from 'react';
-import { Canvas } from '@react-three/fiber';
+import { motion } from 'framer-motion';
 import { PROJECTS } from '../data/portfolioData';
 import type { Project } from '../types';
-import { ProjectModelPreview } from './3d/ProjectModelPreview';
-import { MatrixRain } from './3d/MatrixRain';
 import { soundEngine } from '../audio/soundEngine';
-import { ExternalLink, X, Layers, Cpu, Code2 } from 'lucide-react';
-
-const GithubIcon = ({ className }: { className?: string }) => (
-  <svg className={className} fill="currentColor" viewBox="0 0 24 24">
-    <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
-  </svg>
-);
+import { ExternalLink, Sparkles, CheckCircle2, ChevronRight, Layers } from 'lucide-react';
 
 export const Projects: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [hoveredCardId, setHoveredCardId] = useState<string | null>(null);
-  const [cardRotate, setCardRotate] = useState<{ [key: string]: { x: number; y: number } }>({});
 
-  const handleMouseMoveCard = (e: React.MouseEvent<HTMLDivElement>, id: string) => {
-    const card = e.currentTarget;
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-
-    const rotateX = (y - centerY) / 12;
-    const rotateY = (centerX - x) / 12;
-
-    setCardRotate((prev) => ({ ...prev, [id]: { x: rotateX, y: rotateY } }));
+  const handleSelect = (project: Project) => {
+    soundEngine.playCardSelect();
+    setSelectedProject(project);
   };
 
-  const handleMouseLeaveCard = (id: string) => {
-    setCardRotate((prev) => ({ ...prev, [id]: { x: 0, y: 0 } }));
-    setHoveredCardId(null);
+  const closeModal = () => {
+    soundEngine.playClick();
+    setSelectedProject(null);
   };
 
   return (
-    <section id="projects" className="relative w-full py-20 px-4 max-w-7xl mx-auto">
-      {/* Header */}
-      <div className="mb-12 text-center">
-        <div className="inline-flex items-center gap-2 font-mono text-xs text-amber-400 tracking-widest uppercase mb-2">
-          <Layers className="h-4 w-4" />
-          <span>STARK INDUSTRIES MARK MODULES // 3D ARCHITECTURE</span>
+    <section id="projects" className="relative py-24 px-4 max-w-7xl mx-auto z-10">
+      {/* Section Title */}
+      <motion.div
+        initial={{ opacity: 0, y: 35 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false, amount: 0.3 }}
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        className="text-center mb-16"
+      >
+        <div className="inline-flex items-center gap-2 apple-pill px-4 py-1.5 text-xs font-semibold text-purple-300 mb-4">
+          <Layers className="h-4 w-4 text-purple-400" />
+          <span>Curated Portfolio</span>
         </div>
-        <h2 className="font-orbitron text-3xl sm:text-5xl font-black text-white text-glow-gold">
-          MARK SUIT PROJECTS
+        <h2 className="text-3xl sm:text-5xl font-extrabold text-white mb-4">
+          Featured <span className="apple-gradient-text">Projects</span>
         </h2>
-        <div className="h-1 w-24 bg-gradient-to-r from-amber-500 via-cyan-400 to-red-500 mx-auto mt-4 rounded-full" />
-      </div>
+        <p className="text-slate-400 max-w-xl mx-auto text-sm sm:text-base">
+          Showcasing my flagship AI systems, web development projects, Java suites, and UI/UX design systems.
+        </p>
+      </motion.div>
 
-      {/* Grid of 3D Floating Project Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {PROJECTS.map((project) => {
-          const rot = cardRotate[project.id] || { x: 0, y: 0 };
-          const isHovered = hoveredCardId === project.id;
-
-          return (
+      {/* Projects Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {PROJECTS.map((project, index) => (
+          <motion.div
+            key={project.id}
+            initial={{ opacity: 0, y: 45 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.2 }}
+            transition={{ duration: 0.7, delay: index * 0.12, ease: [0.16, 1, 0.3, 1] }}
+            onClick={() => handleSelect(project)}
+            className="apple-glass apple-glass-hover rounded-3xl p-8 cursor-pointer relative overflow-hidden flex flex-col justify-between group"
+          >
+            {/* Ambient Card Background Glow */}
             <div
-              key={project.id}
-              onMouseMove={(e) => handleMouseMoveCard(e, project.id)}
-              onMouseEnter={() => {
-                setHoveredCardId(project.id);
-                soundEngine.playHover();
-              }}
-              onMouseLeave={() => handleMouseLeaveCard(project.id)}
-              onClick={() => {
-                setSelectedProject(project);
-                soundEngine.playClick();
-              }}
-              style={{
-                transform: `perspective(1000px) rotateX(${rot.x}deg) rotateY(${rot.y}deg) scale3d(${isHovered ? 1.02 : 1}, ${isHovered ? 1.02 : 1}, 1)`,
-                transition: isHovered ? 'transform 0.1s ease-out' : 'transform 0.5s ease-out',
-              }}
-              className="interactive glass-panel glass-panel-hover corner-brackets relative cursor-pointer rounded-xl p-6 flex flex-col justify-between border-amber-500/30"
-            >
-              <div>
-                {/* Header Badge */}
-                <div className="flex items-center justify-between font-mono text-[10px] text-amber-400 mb-3">
-                  <span className="rounded bg-amber-950/80 px-2 py-0.5 border border-amber-500/40">
-                    {project.category}
-                  </span>
-                  <span>ID: {project.id.toUpperCase()}</span>
-                </div>
+              className="absolute top-0 right-0 w-64 h-64 rounded-full blur-[100px] pointer-events-none opacity-20 group-hover:opacity-40 transition-opacity"
+              style={{ backgroundColor: project.accentColor }}
+            />
 
-                {/* Title */}
-                <h3 className="font-orbitron text-xl font-bold text-white mb-1 group-hover:text-amber-400">
-                  {project.title}
-                </h3>
-                <p className="font-mono text-xs text-cyan-400 mb-3">{project.subtitle}</p>
-                <p className="font-rajdhani text-sm text-slate-300 mb-4 line-clamp-3">
-                  {project.description}
-                </p>
+            <div>
+              {/* Category Pill */}
+              <div className="flex items-center justify-between mb-6">
+                <span className="apple-pill px-3.5 py-1 text-xs font-semibold text-sky-300 border border-white/10">
+                  {project.category}
+                </span>
+                <Sparkles className="h-4 w-4 text-slate-500 group-hover:text-sky-400 transition-colors" />
               </div>
 
-              <div>
-                {/* Metric Readout */}
-                <div className="mb-4 grid grid-cols-2 gap-2 font-mono text-[10px] bg-slate-950/80 p-2 rounded border border-slate-800">
-                  {project.metrics.slice(0, 2).map((m) => (
-                    <div key={m.label}>
-                      <div className="text-slate-400">{m.label}</div>
-                      <div className="text-amber-300 font-bold">{m.value}</div>
-                    </div>
-                  ))}
-                </div>
+              {/* Title */}
+              <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-sky-300 transition-colors">
+                {project.title}
+              </h3>
 
-                {/* Tech Tags */}
-                <div className="flex flex-wrap gap-1.5 mb-4">
-                  {project.tags.slice(0, 4).map((tag) => (
-                    <span
-                      key={tag}
-                      className="font-mono text-[9px] rounded bg-slate-900 px-2 py-0.5 text-slate-300 border border-slate-700"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
+              {/* Subtitle */}
+              <p className="text-xs font-semibold text-purple-300 mb-4 uppercase tracking-wider">
+                {project.subtitle}
+              </p>
 
-                {/* Action trigger label */}
-                <div className="flex items-center justify-between font-mono text-xs text-amber-400 pt-2 border-t border-amber-500/20">
-                  <span>INSPECT MARK SUIT</span>
-                  <span>&rarr;</span>
-                </div>
+              {/* Description */}
+              <p className="text-slate-300 text-sm mb-6 leading-relaxed">
+                {project.description}
+              </p>
+
+              {/* Tech Tags */}
+              <div className="flex flex-wrap gap-2 mb-8">
+                {project.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="apple-pill px-3 py-1 text-xs font-medium text-slate-300 border border-white/5"
+                  >
+                    {tag}
+                  </span>
+                ))}
               </div>
             </div>
-          );
-        })}
+
+            {/* Bottom Actions */}
+            <div className="flex items-center justify-between pt-4 border-t border-white/10">
+              <span className="text-xs font-semibold text-sky-400 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                <span>View Project Specs</span>
+                <ChevronRight className="h-4 w-4" />
+              </span>
+
+              <div className="flex gap-2">
+                {project.githubUrl && (
+                  <a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="h-9 w-9 rounded-full apple-glass flex items-center justify-center text-slate-300 hover:text-white transition-colors"
+                  >
+                    <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">
+                      <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                    </svg>
+                  </a>
+                )}
+                {project.liveUrl && (
+                  <a
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="h-9 w-9 rounded-full apple-glass flex items-center justify-center text-slate-300 hover:text-white transition-colors"
+                  >
+                    <ExternalLink className="h-4 w-4" />
+                  </a>
+                )}
+              </div>
+            </div>
+          </motion.div>
+        ))}
       </div>
 
-      {/* Full-Screen Holo-Inspector Modal */}
+      {/* Project Deep Dive Modal */}
       {selectedProject && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-xl">
-          {/* Matrix Code Rain Canvas */}
-          <MatrixRain color={selectedProject.accentColor} opacity={0.25} />
-
-          {/* Modal Container */}
-          <div className="glass-panel corner-brackets relative z-10 w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl border-amber-400 p-6 shadow-[0_0_55px_rgba(255,215,0,0.35)] text-white">
-            {/* Close Button */}
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
+          <div className="apple-glass rounded-3xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-white/20 shadow-2xl relative">
             <button
-              onClick={() => {
-                setSelectedProject(null);
-                soundEngine.playClick();
-              }}
-              className="interactive absolute top-4 right-4 flex h-9 w-9 items-center justify-center rounded-full border border-amber-400/50 bg-slate-900 text-amber-400 hover:bg-red-500 hover:text-white transition-all"
+              onClick={closeModal}
+              className="absolute top-6 right-6 h-10 w-10 rounded-full apple-glass flex items-center justify-center text-slate-300 hover:text-white"
             >
-              <X className="h-5 w-5" />
+              ✕
             </button>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {/* 3D Preview Canvas */}
-              <div className="relative h-64 lg:h-auto min-h-[260px] rounded-xl overflow-hidden border border-amber-500/40 bg-slate-950/80">
-                <Canvas camera={{ position: [0, 0, 5] }}>
-                  <ProjectModelPreview
-                    shape={selectedProject.modelShape}
-                    color={selectedProject.accentColor}
-                  />
-                </Canvas>
-                <div className="absolute bottom-2 left-2 font-mono text-[10px] text-amber-400 bg-slate-950/90 px-2 py-0.5 rounded border border-amber-500/40">
-                  [ 3D STARK HOLO INSPECTOR ACTIVE ]
-                </div>
-              </div>
+            <span className="apple-pill px-3.5 py-1 text-xs font-semibold text-sky-300 mb-4 inline-block">
+              {selectedProject.category}
+            </span>
 
-              {/* Detail Content */}
-              <div>
-                <div className="flex items-center gap-2 font-mono text-xs text-amber-400 mb-2">
-                  <Cpu className="h-4 w-4" />
-                  <span>{selectedProject.category}</span>
-                </div>
+            <h3 className="text-3xl font-extrabold text-white mb-2">
+              {selectedProject.title}
+            </h3>
 
-                <h3 className="font-orbitron text-2xl sm:text-3xl font-black text-white mb-1">
-                  {selectedProject.title}
-                </h3>
-                <p className="font-mono text-sm text-cyan-400 mb-4">
-                  {selectedProject.subtitle}
-                </p>
+            <p className="text-sm font-semibold text-purple-300 mb-6 uppercase tracking-wider">
+              {selectedProject.subtitle}
+            </p>
 
-                <p className="font-rajdhani text-base text-slate-300 mb-6 leading-relaxed">
-                  {selectedProject.longDescription}
-                </p>
+            <p className="text-slate-300 text-sm mb-6 leading-relaxed">
+              {selectedProject.longDescription}
+            </p>
 
-                {/* Telemetry Metrics */}
-                <div className="mb-6 grid grid-cols-3 gap-2 font-mono text-xs bg-slate-950 p-3 rounded border border-amber-500/30">
-                  {selectedProject.metrics.map((m) => (
-                    <div key={m.label}>
-                      <div className="text-slate-400 text-[10px]">{m.label}</div>
-                      <div className="text-amber-400 font-bold">{m.value}</div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Architecture Highlights */}
-                <div className="mb-6">
-                  <div className="font-mono text-xs font-bold text-amber-300 mb-2 flex items-center gap-1.5">
-                    <Code2 className="h-4 w-4 text-amber-400" />
-                    <span>SUIT AVIONICS & ARCHITECTURE:</span>
+            {/* Architecture Details */}
+            <div className="mb-6">
+              <h4 className="text-xs font-bold uppercase text-slate-400 mb-3 tracking-wider">
+                Key Features & Architecture:
+              </h4>
+              <div className="space-y-2.5">
+                {selectedProject.architectureDetails.map((detail, idx) => (
+                  <div key={idx} className="flex items-start gap-2.5 text-xs text-slate-300">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
+                    <span>{detail}</span>
                   </div>
-                  <ul className="space-y-1.5 font-rajdhani text-sm text-slate-300">
-                    {selectedProject.architectureDetails.map((item, idx) => (
-                      <li key={idx} className="flex items-start gap-2">
-                        <span className="text-amber-400 font-mono">&gt;</span>
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Links */}
-                <div className="flex flex-wrap gap-4 pt-4 border-t border-amber-500/20">
-                  {selectedProject.liveUrl && (
-                    <a
-                      href={selectedProject.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="interactive flex items-center gap-2 rounded bg-amber-400 px-4 py-2 font-mono text-xs font-bold text-slate-950 hover:bg-amber-300 transition-colors shadow-[0_0_15px_#ffd700]"
-                    >
-                      <span>LAUNCH SUIT SIMULATION</span>
-                      <ExternalLink className="h-3.5 w-3.5" />
-                    </a>
-                  )}
-                  {selectedProject.githubUrl && (
-                    <a
-                      href={selectedProject.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="interactive flex items-center gap-2 rounded border border-slate-700 bg-slate-900 px-4 py-2 font-mono text-xs font-bold text-slate-200 hover:border-amber-400 hover:text-amber-400 transition-colors"
-                    >
-                      <GithubIcon className="h-4 w-4" />
-                      <span>SOURCE CODE</span>
-                    </a>
-                  )}
-                </div>
+                ))}
               </div>
+            </div>
+
+            {/* Metrics Grid */}
+            <div className="grid grid-cols-3 gap-4 mb-8">
+              {selectedProject.metrics.map((metric) => (
+                <div key={metric.label} className="apple-glass rounded-2xl p-4 text-center">
+                  <div className="text-xs font-semibold text-slate-400 mb-1">{metric.label}</div>
+                  <div className="text-base font-bold text-sky-400">{metric.value}</div>
+                </div>
+              ))}
+            </div>
+
+            <div className="flex justify-end gap-3 pt-4 border-t border-white/10">
+              {selectedProject.githubUrl && (
+                <a
+                  href={selectedProject.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 apple-glass px-5 py-2.5 rounded-full text-xs font-semibold text-white hover:bg-white/10"
+                >
+                  <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">
+                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                  </svg>
+                  <span>GitHub Repository</span>
+                </a>
+              )}
             </div>
           </div>
         </div>

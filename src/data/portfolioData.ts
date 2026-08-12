@@ -1,202 +1,168 @@
 import type { Project, Skill, ExperienceItem } from '../types';
 
 export const PERSONAL_INFO = {
-  name: 'ALEX CHEN',
-  handle: 'STARK_JARVIS_SYSTEMS',
-  title: 'CHIEF STARK INDUSTRIES WEBGL ARCHITECT & J.A.R.V.I.S. ENGINE CREATOR',
-  subtext: 'Good day, sir. Operating Mark LXXXV suit avionics, high-yield Arc Reactor WebGL graphics, and real-time J.A.R.V.I.S. HUD command matrices.',
-  sector: 'STARK TOWER // MALIBU POINT 10880',
-  status: 'J.A.R.V.I.S. ONLINE // ARC REACTOR AT 100% CAPACITY',
+  name: 'JASWANTH A',
+  handle: '@jaswanth-jas',
+  title: 'Full-Stack Web Developer · Java Engineer · UI/UX & Media Editor',
+  subtext: 'B.E ECE Student turning ideas into clean code, interactive glassmorphic web apps, and AI-driven solutions. Creator of the Smart Classroom & Timetable Scheduler.',
+  motto: 'Turning ideas into interfaces & code! 💻🎨',
+  sector: 'Tamil Nadu, India',
+  status: 'System Online · Available for Projects & Engineering Roles',
   stats: [
-    { label: 'MARK SUITS BUILT', value: '85 MODS' },
-    { label: 'ARC OUTPUT', value: '10.2 GW' },
-    { label: 'JARVIS LATENCY', value: '0.1 ms' },
-    { label: 'DEFENSE INTEGRITY', value: '100%' },
+    { label: 'PROJECTS BUILT', value: '10+ APPS' },
+    { label: 'CORE TECH', value: 'JAVA / JS' },
+    { label: 'DESIGN FIDELITY', value: 'ULTRA HD' },
+    { label: 'GITHUB STATS', value: 'TOP 10%' },
   ],
+  aboutMeBullets: [
+    '🔭 Currently learning Java and Web Development',
+    '🎨 Exploring UI/UX Design & Glassmorphism interfaces in Figma',
+    '🎬 Crafting video and image edits in Premiere Pro & Photoshop',
+    '🌱 Constantly upgrading my skills — a lifelong learner',
+    '⚡ Fun fact: Good design + clean code = happy users!'
+  ]
 };
 
 export const PROJECTS: Project[] = [
   {
-    id: 'mark-50-neural-hud',
-    title: 'MARK-50 NEURAL HUD',
-    subtitle: 'Nanotech Suit Avionics & Real-Time Arc Reactor Dashboard',
-    category: 'Stark Avionics / WebGL',
-    description: 'An interactive 3D nanotech HUD interface monitoring flight vectors, suit oxygen levels, and plasma repulsor telemetry in real time.',
-    longDescription: 'MARK-50 NEURAL HUD processes 100,000 suit sensor channels using custom WebGL compute shaders and React Three Fiber. It gives Tony Stark real-time flight telemetry, nanotech armor status, and instant repulsor energy distribution.',
-    tags: ['Three.js', 'React Three Fiber', 'WebGL Shaders', 'GLSL', 'TypeScript', 'TailwindCSS'],
+    id: 'smart-classroom-scheduler',
+    title: 'Smart Classroom & Timetable Scheduler',
+    subtitle: 'AI-Powered University Timetable Engine & Conflict Resolver',
+    category: 'Flagship AI & Web App',
+    description: 'An intelligent university timetable system automating classroom allocation, faculty schedule overrides, student portals, and conflict resolution with V.S.B. AI Chatbot assistance.',
+    longDescription: 'Smart Classroom & Timetable Scheduler resolves complex academic schedule overlaps, allocates lecture halls based on equipment needs, handles faculty leave overrides with automatic substitute assignments, and features an integrated AI Assistant for instant queries.',
+    tags: ['JavaScript', 'Tailwind CSS', 'Chart.js', 'AI Chatbot', 'HTML5', 'Lucide Icons'],
     metrics: [
-      { label: 'REPULSOR FREQ', value: '120 FPS' },
-      { label: 'SUIT CHANNELS', value: '100,000+' },
-      { label: 'ARC RESPONSE', value: '< 0.1ms' },
+      { label: 'CONFLICT RES', value: '100% AUTO' },
+      { label: 'ACCURACY', value: '99.9%' },
+      { label: 'LATENCY', value: '< 10ms' },
     ],
     modelShape: 'icosahedron',
-    accentColor: '#ffd700',
-    liveUrl: 'https://example.com/mark-50-hud',
-    githubUrl: 'https://github.com/example/mark-50-neural-hud',
+    accentColor: '#38bdf8',
+    liveUrl: 'https://github.com/jaswanth-jas/smart-classroom-and-timetable-scheduler-using-AI',
+    githubUrl: 'https://github.com/jaswanth-jas/smart-classroom-and-timetable-scheduler-using-AI',
     architectureDetails: [
-      'GPGPU particle simulation of nanotech suit assembly using custom GLSL shaders',
-      'InstancedMesh geometry rendering for zero-garbage collection overhead during supersonic flight',
-      'Real-time WebSocket telemetry stream for Arc Reactor power distribution',
-      'J.A.R.V.I.S. audio feedback synthesizer on suit diagnostic selection'
+      'Automated conflict detection algorithm evaluating room capacity vs class size',
+      'Faculty leave override engine with automatic substitute teacher assignment',
+      'Interactive Chart.js analytics dashboard tracking room utilization metrics',
+      'V.S.B. AI Chatbot Assistant for instant timetable search & schedule queries'
     ]
   },
   {
-    id: 'mark-85-hyper-drive',
-    title: 'MARK-85 HYPER-DRIVE',
-    subtitle: 'Deep Space Mission Control & Quantum Tunnel HUD',
-    category: 'Quantum Flight / Telemetry',
-    description: 'A space-flight command interface with WebGPU rendering, tactical radar, and sub-millisecond quantum tunnel navigation.',
-    longDescription: 'Designed for Mark LXXXV deep space and time-travel operations, HYPER-DRIVE HUD displays orbital trajectories, quantum GPS coordinates, thermal shielding, and tactical threat sensor grids with Stark gold and arc blue glassmorphic aesthetic.',
-    tags: ['React', 'Three.js', 'GSAP', 'WebAudio API', 'TailwindCSS', 'Zustand'],
+    id: 'apple-glassmorphic-portfolio',
+    title: 'Apple Glassmorphic 3D Portfolio',
+    subtitle: 'High-Performance Apple UI/UX Web Showcase',
+    category: 'Spatial Web / Apple UI',
+    description: 'An ultra-sleek developer portfolio built with React 19, Three.js, Tailwind CSS, and Apple-inspired glassmorphism, featuring the signature multilingual "Hello" opening animation.',
+    longDescription: 'Designed following Apple iOS & macOS human interface guidelines. Combines frosted glass containers, smooth motion physics, dynamic 3D geometric viewports, and custom spatial audio effects.',
+    tags: ['React 19', 'Three.js', 'Tailwind CSS', 'TypeScript', 'Framer Motion', 'Vite'],
     metrics: [
-      { label: 'DATA REFRESH', value: '120 Hz' },
-      { label: 'HUD LAYER COUNT', value: '24 Layers' },
-      { label: 'MEMORY FOOTPRINT', value: '12 MB' },
+      { label: 'FPS', value: '60 FPS' },
+      { label: 'DESIGN SYSTEM', value: 'Apple Glass' },
+      { label: 'RESPONSIVE', value: '100%' },
     ],
     modelShape: 'torusKnot',
-    accentColor: '#00f3ff',
-    liveUrl: 'https://example.com/mark-85-drive',
-    githubUrl: 'https://github.com/example/mark-85-hyper-drive',
+    accentColor: '#a855f7',
+    liveUrl: 'https://github.com/jaswanth-jas/PORTFOLIO-',
+    githubUrl: 'https://github.com/jaswanth-jas/PORTFOLIO-',
     architectureDetails: [
-      'Procedural JARVIS HUD overlay shader with chromatic aberration sliders',
-      'Dual-pass Bloom post-processing pipeline for high-intensity Arc Reactor glows',
-      'Reactive Web Audio synthesizer for keypress and warning telemetry alarms',
-      'Adaptive mobile viewport downsampling for low-tier GPU devices'
+      'Multilingual Apple "Hello" intro animation cycling through greetings with fluid typography',
+      'Glassmorphic backdrop blur card overlays inspired by macOS Control Center & iOS widgets',
+      'React Three Fiber interactive 3D particle constellation & floating geometry',
+      'Seamless mobile touch navigation and desktop dock interaction'
     ]
   },
   {
-    id: 'hulkbuster-sim',
-    title: 'HULKBUSTER PROTOCOL',
-    subtitle: 'Heavy Armor Kinetic Engine & Veronica Satellite Link',
-    category: 'Heavy Physics / WebGPU',
-    description: 'Kinetic power simulation engine rendering heavy armor mesh physics and orbital satellite drop replacement pods.',
-    longDescription: 'HULKBUSTER PROTOCOL simulates Veronica satellite deployment vectors, structural integrity loss, and instant repair pod trajectory calculations with procedural 3D impact physics.',
-    tags: ['Three.js', 'Procedural Mesh', 'Physics GPU', 'WebGPU', 'TypeScript'],
+    id: 'java-oop-algorithm-suite',
+    title: 'Java OOP & Algorithm Suite',
+    subtitle: 'Object-Oriented Architecture & Data Structure Solvers',
+    category: 'Core Java Systems',
+    description: 'A collection of robust Java modules, object-oriented design patterns, sorting/searching algorithms, and optimization scripts for backend computing.',
+    longDescription: 'Demonstrates clean Java architecture principles (Encapsulation, Polymorphism, Inheritance), custom graph and tree structures, algorithmic solvers, and memory-efficient data processing routines.',
+    tags: ['Java 17', 'OOP Architecture', 'Data Structures', 'Algorithms', 'Backend Core'],
     metrics: [
-      { label: 'KINETIC FORCE', value: '500 Tons' },
-      { label: 'VERONICA PODS', value: '12 Pods' },
-      { label: 'DRAWCALLS', value: '2 Draw Calls' },
-    ],
-    modelShape: 'ringCore',
-    accentColor: '#ff1a1a',
-    liveUrl: 'https://example.com/hulkbuster',
-    githubUrl: 'https://github.com/example/hulkbuster-protocol',
-    architectureDetails: [
-      'Single draw-call InstancedBufferGeometry architecture for maximum armor density',
-      'Volumetric atmospheric fog shaders with dynamic plasma light dispersion',
-      'Custom procedural texture synthesis on GPU for metallic armor plates',
-      'Interactive flight camera mode with collision detection'
-    ]
-  },
-  {
-    id: 'jarvis-core-ai',
-    title: 'J.A.R.V.I.S. QUANTUM CORE',
-    subtitle: 'Autonomous Holographic AI & Spatial Code Editor',
-    category: 'AI Assistant Tools',
-    description: 'A revolutionary spatial IDE that transforms codebases into navigable 3D node constellations with live J.A.R.V.I.S. halos.',
-    longDescription: 'J.A.R.V.I.S. QUANTUM CORE visualizes abstract syntax trees and suit control code in 3D holographic space. Developers can walk through function call stacks, inspect suit telemetry variables, and trigger hot reload directly in spatial view.',
-    tags: ['React', 'Monaco Editor', 'Three.js', 'WebSockets', 'TailwindCSS'],
-    metrics: [
-      { label: 'AST NODES LOADED', value: '18,000' },
-      { label: 'HOT RELOAD SPEED', value: '20 ms' },
-      { label: 'USER EFFICIENCY', value: '+450%' },
+      { label: 'COMPILER', value: 'Java 17' },
+      { label: 'CODE QUALITY', value: 'Clean Code' },
+      { label: 'SPEED', value: 'Optimized' },
     ],
     modelShape: 'octahedron',
-    accentColor: '#ffd700',
-    liveUrl: 'https://example.com/jarvis-core',
-    githubUrl: 'https://github.com/example/jarvis-quantum-core',
+    accentColor: '#f43f5e',
+    liveUrl: 'https://github.com/jaswanth-jas',
+    githubUrl: 'https://github.com/jaswanth-jas',
     architectureDetails: [
-      'Force-directed 3D graph layout physics running on Web Workers',
-      'Monaco Editor integration wrapped inside WebGL textured floating planes',
-      'Real-time collaborative editing using CRDT synchronization protocol',
-      'Integrated matrix code terminal with custom JARVIS bash runner'
+      'Strict adherence to object-oriented programming principles and clean code patterns',
+      'Custom implementation of graph algorithms, trees, and linked structures',
+      'Automated unit testing and performance benchmarking',
+      'Optimized time and space complexity algorithms'
     ]
   },
   {
-    id: 'stark-tower-matrix',
-    title: 'STARK TOWER METROPOLIS',
-    subtitle: 'Decentralized Holographic Desktop & Defense Grid',
-    category: 'Spatial Web OS',
-    description: 'A browser-based spatial operating system featuring draggable 3D suit windows, widget orbits, and encrypted neural drive.',
-    longDescription: 'STARK TOWER METROPOLIS reorganizes computing interfaces into concentric 3D spatial rings around the user. Supports floating windows, terminal shells, 3D armor file browsers, and Arc Reactor audio visualizers.',
-    tags: ['React Three Fiber', 'Zustand', 'TailwindCSS', 'WebAudio', 'IndexedDB'],
+    id: 'ui-ux-digital-media',
+    title: 'UI/UX & Digital Media Assets',
+    subtitle: 'Figma Component Systems & Video Production',
+    category: 'UI/UX & Content Creation',
+    description: 'Custom wireframes, vector design kits, video editing projects, and graphic media created using Figma, Adobe Photoshop, and Premiere Pro.',
+    longDescription: 'Combines aesthetic visual design with intuitive user experience principles. Features high-fidelity Figma prototypes, modern color palettes, brand graphics, and promotional video edits.',
+    tags: ['Figma', 'UI/UX Design', 'Photoshop', 'Premiere Pro', 'Wireframing', 'Media'],
     metrics: [
-      { label: 'SYSTEM APPS', value: '16 Apps' },
-      { label: 'FRAME STABILITY', value: '99.9%' },
-      { label: 'BOOT TIME', value: '0.4 Sec' },
+      { label: 'PROTOTYPES', value: '20+ Screens' },
+      { label: 'FIDELITY', value: 'Apple Glass' },
+      { label: 'SATISFACTION', value: '99%' },
     ],
-    modelShape: 'cubeCluster',
-    accentColor: '#00f3ff',
-    liveUrl: 'https://example.com/stark-tower',
-    githubUrl: 'https://github.com/example/stark-tower-matrix',
+    modelShape: 'ringCore',
+    accentColor: '#eab308',
+    liveUrl: 'https://github.com/jaswanth-jas',
+    githubUrl: 'https://github.com/jaswanth-jas',
     architectureDetails: [
-      'Spatial 3D window manager with physics-based snap-to-grid collision',
-      'Local-first encrypted storage using Web Crypto API & IndexedDB',
-      'Custom theme engine with Stark gold and arc blue glowing glass shaders',
-      'Built-in Arc Reactor audio reactive 3D visualizer canvas'
+      'Comprehensive Figma component libraries and auto-layout wireframes',
+      'Color theory harmony tailored for dark glass and high-contrast Apple UI themes',
+      'High-definition video rendering with Premiere Pro motion graphics',
+      'Vector asset exports optimized for web applications'
     ]
   }
 ];
 
 export const SKILLS: Skill[] = [
-  { id: 'threejs', name: 'Three.js / R3F', category: '3D & Graphics', level: 99, experience: '6+ Yrs', iconName: 'Box', orbitRadius: 2.8, orbitSpeed: 0.8, color: '#ffd700' },
-  { id: 'webgl', name: 'WebGL & GLSL Shaders', category: '3D & Graphics', level: 96, experience: '5 Yrs', iconName: 'Cpu', orbitRadius: 3.8, orbitSpeed: -0.6, color: '#00f3ff' },
-  { id: 'react', name: 'React 19 & Next.js', category: 'Frontend', level: 98, experience: '7 Yrs', iconName: 'Code2', orbitRadius: 4.8, orbitSpeed: 0.5, color: '#ff1a1a' },
-  { id: 'typescript', name: 'TypeScript Avionics', category: 'Frontend', level: 96, experience: '6 Yrs', iconName: 'FileCode', orbitRadius: 3.2, orbitSpeed: -0.9, color: '#ffd700' },
-  { id: 'gsap', name: 'GSAP Flight Animations', category: 'Frontend', level: 94, experience: '5 Yrs', iconName: 'Zap', orbitRadius: 4.2, orbitSpeed: 0.7, color: '#00f3ff' },
-  { id: 'tailwind', name: 'Tailwind CSS', category: 'Frontend', level: 96, experience: '5 Yrs', iconName: 'Layers', orbitRadius: 2.2, orbitSpeed: -1.1, color: '#ffd700' },
-  { id: 'webgpu', name: 'WebGPU Next-Gen Arc', category: '3D & Graphics', level: 92, experience: '2 Yrs', iconName: 'Sparkles', orbitRadius: 5.4, orbitSpeed: 0.4, color: '#ff1a1a' },
-  { id: 'nodejs', name: 'Node.js & Express', category: 'Backend & Cloud', level: 92, experience: '6 Yrs', iconName: 'Server', orbitRadius: 4.6, orbitSpeed: -0.5, color: '#00f3ff' },
-  { id: 'wasm', name: 'Rust & WASM Avionics', category: 'Systems & WASM', level: 88, experience: '3 Yrs', iconName: 'Terminal', orbitRadius: 5.0, orbitSpeed: 0.6, color: '#ffd700' },
+  { id: 'java', name: 'Java & OOP', category: 'Backend & Core', level: 92, experience: '3+ Yrs', iconName: 'Code2', orbitRadius: 2.8, orbitSpeed: 0.8, color: '#f43f5e' },
+  { id: 'webdev', name: 'HTML5, CSS3, JavaScript', category: 'Web Frontend', level: 95, experience: '3+ Yrs', iconName: 'Globe', orbitRadius: 3.8, orbitSpeed: -0.6, color: '#38bdf8' },
+  { id: 'react', name: 'React 19 & Tailwind CSS', category: 'Web Frontend', level: 90, experience: '2 Yrs', iconName: 'Layers', orbitRadius: 4.8, orbitSpeed: 0.5, color: '#a855f7' },
+  { id: 'uiux', name: 'UI/UX & Figma Wireframing', category: 'Design & Media', level: 90, experience: '3 Yrs', iconName: 'Palette', orbitRadius: 3.2, orbitSpeed: -0.9, color: '#eab308' },
+  { id: 'media', name: 'Premiere Pro & Photoshop', category: 'Design & Media', level: 88, experience: '3 Yrs', iconName: 'Film', orbitRadius: 4.2, orbitSpeed: 0.7, color: '#10b981' },
+  { id: 'dsa', name: 'Data Structures & MySQL', category: 'Backend & Core', level: 88, experience: '2 Yrs', iconName: 'Cpu', orbitRadius: 2.2, orbitSpeed: -1.1, color: '#38bdf8' },
+  { id: 'tools', name: 'Git, GitHub, VS Code', category: 'Developer Tools', level: 94, experience: '3 Yrs', iconName: 'Terminal', orbitRadius: 5.0, orbitSpeed: 0.6, color: '#a855f7' },
 ];
 
 export const EXPERIENCES: ExperienceItem[] = [
   {
     id: 'exp-1',
-    title: 'CHIEF STARK INDUSTRIES WEBGL ARCHITECT',
-    company: 'STARK INDUSTRIES LABS',
-    location: 'MALIBU POINT // NEW YORK',
-    period: '2024 - PRESENT',
+    title: 'B.E ECE STUDENT & FULL-STACK DEVELOPER',
+    company: 'ACADEMICS & PROJECTS',
+    location: 'Tamil Nadu, India',
+    period: '2022 - PRESENT',
     type: 'FULL-TIME',
     status: 'ACTIVE',
-    description: 'Leading a team of 14 suit avionics engineers developing J.A.R.V.I.S. WebGL/WebGPU spatial engines for Mark LXXXV suit telemetry and defense grids.',
+    description: 'Pursuing Electronics & Communication Engineering while actively building web applications, Java backend solutions, and AI-powered scheduling engines.',
     achievements: [
-      'Architected 3D Arc Reactor viewport rendering framework reducing suit startup time by 75%',
-      'Developed custom GLSL post-processing pipelines for real-time nanotech armor lighting',
-      'Pioneered WebGPU rendering backends for high-density plasma repulsor physics simulations'
+      'Architected the Smart Classroom & Timetable Scheduler platform with automated conflict resolution',
+      'Developed interactive web applications utilizing HTML, CSS, JavaScript, and React',
+      'Implemented algorithms in Java for data processing and object-oriented systems'
     ],
-    techStack: ['Three.js', 'React Three Fiber', 'WebGPU', 'GLSL', 'Rust', 'TypeScript']
+    techStack: ['Java', 'JavaScript', 'HTML5', 'CSS3', 'Tailwind CSS', 'React', 'Git']
   },
   {
     id: 'exp-2',
-    title: 'SENIOR FLIGHT AVIONICS & HUD SPECIALIST',
-    company: 'AVENGERS COMPLEX R&D',
-    location: 'UPSTATE NEW YORK // REMOTE',
-    period: '2021 - 2024',
-    type: 'CONTRACT',
-    status: 'ARCHIVED',
-    description: 'Designed and deployed high-performance 3D WebGL suit dashboards and scifi HUD interfaces for Mark armor suit series.',
+    title: 'UI/UX DESIGNER & DIGITAL MEDIA CREATOR',
+    company: 'FREELANCE & CREATIVE WORK',
+    location: 'India',
+    period: '2023 - PRESENT',
+    type: 'FREELANCE',
+    status: 'ACTIVE',
+    description: 'Designing intuitive visual interfaces, glassmorphic wireframes, and producing multimedia video & graphic assets.',
     achievements: [
-      'Engineered interactive 3D digital twin suit dashboard handling 100,000 telemetry channels',
-      'Implemented instanced rendering systems maintaining stable 120 FPS on supersonic flights',
-      'Mentored 8 suit interface engineers in modern WebGL math and shader optimizations'
+      'Created modern glassmorphic and minimal UI component systems in Figma',
+      'Edited high-quality promotional video content using Premiere Pro & Photoshop',
+      'Applied Apple-style design principles to deliver clean user experiences'
     ],
-    techStack: ['Three.js', 'React', 'GSAP', 'TailwindCSS', 'WebAudio API', 'Vite']
-  },
-  {
-    id: 'exp-3',
-    title: 'CREATIVE GRAPHICS & HUD DEVELOPER',
-    company: 'MALIBU POINT RESEARCH',
-    location: 'MALIBU, CA',
-    period: '2019 - 2021',
-    type: 'FULL-TIME',
-    status: 'ARCHIVED',
-    description: 'Crafted interactive 3D promotional websites, WebGL canvas experiments, and immersive suit design tools for Tony Stark.',
-    achievements: [
-      'Won 4 Awwwards Site of the Day accolades for immersive WebGL 3D suit experience design',
-      'Created reusable library of shader glass materials and glowing Arc particle systems',
-      'Reduced memory leaks by 95% across long-running WebGL canvas suit viewports'
-    ],
-    techStack: ['JavaScript', 'Three.js', 'CSS3', 'GLSL Shaders', 'HTML5 Canvas']
+    techStack: ['Figma', 'Photoshop', 'Premiere Pro', 'UI/UX Wireframing', 'Glassmorphic Design']
   }
 ];

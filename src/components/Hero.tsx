@@ -1,132 +1,126 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Canvas } from '@react-three/fiber';
+import { motion } from 'framer-motion';
 import { HoloCore } from './3d/HoloCore';
 import { ParticleField } from './3d/ParticleField';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { soundEngine } from '../audio/soundEngine';
-import { ChevronRight, Cpu, Zap, ShieldCheck } from 'lucide-react';
+import { ArrowRight, Sparkles, ShieldCheck, Zap, Activity, Cpu } from 'lucide-react';
 
 export const Hero: React.FC = () => {
-  const [glitchedName, setGlitchedName] = useState(PERSONAL_INFO.name);
-  const [glitchedTitle, setGlitchedTitle] = useState(PERSONAL_INFO.title);
-
-  const triggerGlitch = () => {
-    soundEngine.playGlitch();
-    const chars = '!@#$%^&*()_+-=[]{}|;:,.<>?';
-    let count = 0;
-    const interval = setInterval(() => {
-      setGlitchedName(
-        PERSONAL_INFO.name
-          .split('')
-          .map((char) => (Math.random() > 0.4 ? chars[Math.floor(Math.random() * chars.length)] : char))
-          .join('')
-      );
-      setGlitchedTitle(
-        PERSONAL_INFO.title
-          .split('')
-          .map((char) => (Math.random() > 0.5 ? chars[Math.floor(Math.random() * chars.length)] : char))
-          .join('')
-      );
-      count++;
-      if (count > 6) {
-        clearInterval(interval);
-        setGlitchedName(PERSONAL_INFO.name);
-        setGlitchedTitle(PERSONAL_INFO.title);
-      }
-    }, 40);
+  const handleInteraction = () => {
+    soundEngine.playClick();
   };
 
   return (
-    <section id="hero" className="relative min-h-screen w-full flex items-center justify-center pt-24 pb-12 overflow-hidden">
-      {/* Background 3D Arc Canvas */}
-      <div className="absolute inset-0 z-0">
+    <section id="hero" className="relative min-h-screen w-full flex flex-col justify-center items-center pt-28 pb-16 overflow-hidden">
+      {/* Background 3D Canvas */}
+      <div className="absolute inset-0 z-0 opacity-80">
         <Canvas camera={{ position: [0, 0, 8], fov: 60 }}>
-          <ParticleField count={2500} />
-          <HoloCore shape="icosahedron" color="#ffd700" />
+          <ParticleField count={2400} />
+          <HoloCore shape="torusKnot" color="#38bdf8" />
         </Canvas>
       </div>
 
-      {/* Cyberpunk HUD Grid & Vignette Overlay */}
-      <div className="hud-grid absolute inset-0 z-0 opacity-30 pointer-events-none" />
-      <div className="absolute inset-0 z-0 bg-radial-gradient from-transparent via-[#030712]/75 to-[#030712] pointer-events-none" />
+      {/* Ambient Lighting Blobs */}
+      <div className="absolute top-1/3 left-1/4 h-[500px] w-[500px] rounded-full bg-sky-500/15 blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-1/3 right-1/4 h-[500px] w-[500px] rounded-full bg-purple-500/15 blur-[140px] pointer-events-none" />
 
-      {/* Sci-Fi Corner Telemetry Stats */}
-      <div className="hidden lg:block absolute top-28 left-8 z-10 font-mono text-[10px] text-amber-400/80 tracking-widest space-y-1">
-        <div className="flex items-center gap-2">
-          <ShieldCheck className="h-3.5 w-3.5 text-amber-400" />
-          <span>SUIT INTEGRITY: 100%</span>
-        </div>
-        <div>ARC OUTPUT: 10.2 GW</div>
-        <div>DEFENSE MATRIX: ACTIVE</div>
-      </div>
-
-      <div className="hidden lg:block absolute top-28 right-8 z-10 font-mono text-[10px] text-cyan-400/80 tracking-widest text-right space-y-1">
-        <div className="flex items-center justify-end gap-2">
-          <span>STARK TOWER // MALIBU</span>
-          <Zap className="h-3.5 w-3.5 text-cyan-400 animate-pulse" />
-        </div>
-        <div>MARK LXXXV: AVIONICS ONLINE</div>
-        <div>J.A.R.V.I.S. VOICE: ACTIVE</div>
-      </div>
-
-      {/* Main J.A.R.V.I.S. HUD Central Card */}
-      <div className="relative z-10 max-w-4xl px-4 text-center">
-        {/* Status Badge */}
-        <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/50 bg-amber-950/40 px-3 py-1 font-mono text-xs text-amber-300 shadow-[0_0_20px_rgba(255,215,0,0.35)] mb-6">
-          <span className="h-2 w-2 rounded-full bg-cyan-400 animate-ping" />
-          <span>{PERSONAL_INFO.status}</span>
-        </div>
-
-        {/* Glitch Name */}
-        <h1
-          onMouseEnter={triggerGlitch}
-          className="font-orbitron text-4xl sm:text-6xl md:text-7xl font-black tracking-wider text-white text-glow-gold mb-4 cursor-pointer select-none"
+      {/* Main Hero Container */}
+      <div className="relative z-10 max-w-5xl px-4 text-center">
+        
+        {/* Web3 Dynamic Pill Tag */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="inline-flex items-center gap-2 apple-pill px-4 py-1.5 text-xs font-semibold text-sky-300 mb-8 shadow-xl"
         >
-          {glitchedName}
-        </h1>
+          <Sparkles className="h-4 w-4 text-sky-400 animate-pulse" />
+          <span>{PERSONAL_INFO.status}</span>
+        </motion.div>
 
-        {/* Glitch Subtitle */}
-        <h2 className="font-mono text-sm sm:text-base md:text-xl font-bold tracking-widest text-cyan-400 text-glow-arc mb-6 max-w-2xl mx-auto">
-          {glitchedTitle}
-        </h2>
+        {/* Big Apple Hero Heading */}
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-white mb-6 leading-tight font-web3"
+        >
+          Hello, I'm{' '}
+          <span className="apple-gradient-text">Jaswanth</span>
+        </motion.h1>
 
-        {/* Description Bio */}
-        <p className="font-rajdhani text-base sm:text-lg text-slate-300 max-w-xl mx-auto mb-8 leading-relaxed">
+        {/* Subtitle */}
+        <motion.h2
+          initial={{ opacity: 0, y: 25 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+          className="text-lg sm:text-xl md:text-2xl font-semibold text-slate-300 mb-6 max-w-3xl mx-auto leading-snug"
+        >
+          {PERSONAL_INFO.title}
+        </motion.h2>
+
+        {/* Bio Subtext */}
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
+          className="text-sm sm:text-base text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed"
+        >
           {PERSONAL_INFO.subtext}
-        </p>
+        </motion.p>
 
-        {/* CTA Buttons */}
-        <div className="flex flex-wrap items-center justify-center gap-4">
+        {/* Web3 Provider Style Floating Stat Cards */}
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.55 }}
+          className="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-3xl mx-auto mb-10"
+        >
+          {PERSONAL_INFO.stats.map((stat, idx) => (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.6 + idx * 0.08 }}
+              className="apple-glass rounded-2xl p-3.5 border border-white/10 text-center"
+            >
+              <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-0.5">{stat.label}</div>
+              <div className="text-base font-extrabold text-sky-400 font-web3">{stat.value}</div>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Action Buttons */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.75 }}
+          className="flex flex-wrap items-center justify-center gap-4"
+        >
           <a
             href="#projects"
-            onClick={() => soundEngine.playClick()}
-            onMouseEnter={() => soundEngine.playHover()}
-            className="interactive group glass-panel flex items-center gap-3 rounded-lg border-amber-400 px-6 py-3 font-mono text-sm font-bold text-white transition-all hover:bg-amber-500/20 hover:border-amber-300 hover:shadow-[0_0_30px_#ffd700]"
+            onClick={handleInteraction}
+            className="inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-sky-500 via-indigo-500 to-purple-600 px-8 py-4 text-sm font-semibold text-white shadow-xl shadow-sky-500/25 hover:scale-105 transition-all duration-300"
           >
-            <span>ENGAGE MARK SUITS // PROJECTS</span>
-            <ChevronRight className="h-4 w-4 text-amber-400 group-hover:translate-x-1 transition-transform" />
+            <span>Explore Projects</span>
+            <ArrowRight className="h-4 w-4" />
           </a>
 
           <a
-            href="#contact"
-            onClick={() => soundEngine.playClick()}
-            onMouseEnter={() => soundEngine.playHover()}
-            className="interactive group glass-panel flex items-center gap-2 rounded-lg border-cyan-500/50 px-6 py-3 font-mono text-sm font-bold text-cyan-300 transition-all hover:bg-cyan-500/20 hover:border-cyan-400 hover:shadow-[0_0_25px_#00f3ff]"
+            href="https://github.com/jaswanth-jas"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={handleInteraction}
+            className="inline-flex items-center gap-2.5 apple-glass apple-glass-hover px-7 py-4 text-sm font-semibold text-white rounded-full"
           >
-            <Cpu className="h-4 w-4 text-cyan-400" />
-            <span>JARVIS TERMINAL LINK</span>
+            <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+            </svg>
+            <span>GitHub Profile</span>
           </a>
-        </div>
-
-        {/* Telemetry Quick Bar */}
-        <div className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-3xl mx-auto">
-          {PERSONAL_INFO.stats.map((stat) => (
-            <div key={stat.label} className="glass-panel corner-brackets p-3 rounded text-center border-amber-500/30">
-              <div className="font-orbitron text-xl font-bold text-amber-400">{stat.value}</div>
-              <div className="font-mono text-[10px] text-slate-400 tracking-wider mt-1">{stat.label}</div>
-            </div>
-          ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

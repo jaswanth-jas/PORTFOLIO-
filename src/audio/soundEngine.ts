@@ -1,4 +1,4 @@
-// Web Audio API J.A.R.V.I.S. Sound Synthesizer for Stark Industries HUD
+// Web Audio API Sound Synthesizer for Portfolio UI
 
 class SoundEngine {
   private ctx: AudioContext | null = null;
@@ -24,7 +24,12 @@ class SoundEngine {
     return this.isMuted;
   }
 
-  // JARVIS HUD Hover blip (High-frequency Arc sweep)
+  public toggleMute(): boolean {
+    this.isMuted = !this.isMuted;
+    return this.isMuted;
+  }
+
+  // Hover blip
   public playHover() {
     if (this.isMuted) return;
     try {
@@ -51,7 +56,7 @@ class SoundEngine {
     }
   }
 
-  // Repulsor Target Lock click
+  // Click sound
   public playClick() {
     if (this.isMuted) return;
     try {
@@ -78,7 +83,7 @@ class SoundEngine {
     }
   }
 
-  // JARVIS Voice/Text Glitch sound
+  // Glitch sound
   public playGlitch() {
     if (this.isMuted) return;
     try {
@@ -106,7 +111,34 @@ class SoundEngine {
     }
   }
 
-  // JARVIS Terminal Typing sound
+  // Card select sound
+  public playCardSelect() {
+    if (this.isMuted) return;
+    try {
+      this.init();
+      if (!this.ctx) return;
+
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(440, this.ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(880, this.ctx.currentTime + 0.08);
+
+      gain.gain.setValueAtTime(0.04, this.ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.08);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start();
+      osc.stop(this.ctx.currentTime + 0.08);
+    } catch {
+      // Ignore
+    }
+  }
+
+  // Typing sound
   public playTyping() {
     if (this.isMuted) return;
     try {
@@ -117,43 +149,16 @@ class SoundEngine {
       const gain = this.ctx.createGain();
 
       osc.type = 'square';
-      osc.frequency.setValueAtTime(800 + Math.random() * 500, this.ctx.currentTime);
+      osc.frequency.setValueAtTime(800 + Math.random() * 400, this.ctx.currentTime);
 
-      gain.gain.setValueAtTime(0.009, this.ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 0.02);
-
-      osc.connect(gain);
-      gain.connect(this.ctx.destination);
-
-      osc.start();
-      osc.stop(this.ctx.currentTime + 0.02);
-    } catch {
-      // Ignore
-    }
-  }
-
-  // Arc Reactor Repulsor Warp / Transmission sound
-  public playWarp() {
-    if (this.isMuted) return;
-    try {
-      this.init();
-      if (!this.ctx) return;
-
-      const osc = this.ctx.createOscillator();
-      const gain = this.ctx.createGain();
-
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(200, this.ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(3200, this.ctx.currentTime + 0.4);
-
-      gain.gain.setValueAtTime(0.05, this.ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.4);
+      gain.gain.setValueAtTime(0.008, this.ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0005, this.ctx.currentTime + 0.015);
 
       osc.connect(gain);
       gain.connect(this.ctx.destination);
 
       osc.start();
-      osc.stop(this.ctx.currentTime + 0.4);
+      osc.stop(this.ctx.currentTime + 0.015);
     } catch {
       // Ignore
     }
