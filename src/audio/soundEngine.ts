@@ -163,6 +163,34 @@ class SoundEngine {
       // Ignore
     }
   }
+
+  // Success chord sound
+  public playSuccess() {
+    if (this.isMuted) return;
+    try {
+      this.init();
+      if (!this.ctx) return;
+
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(523.25, this.ctx.currentTime); // C5
+      osc.frequency.exponentialRampToValueAtTime(659.25, this.ctx.currentTime + 0.05); // E5
+      osc.frequency.exponentialRampToValueAtTime(783.99, this.ctx.currentTime + 0.1); // G5
+
+      gain.gain.setValueAtTime(0.04, this.ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.12);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start();
+      osc.stop(this.ctx.currentTime + 0.12);
+    } catch {
+      // Ignore
+    }
+  }
 }
 
 export const soundEngine = new SoundEngine();

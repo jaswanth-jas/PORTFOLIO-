@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { soundEngine } from '../audio/soundEngine';
-import { Heart, Sparkles, Volume2, VolumeX, Activity, Smile, Sun, Moon, CheckCircle2, Zap } from 'lucide-react';
+import { Heart, Sparkles, Volume2, VolumeX, Activity, CheckCircle2, Zap } from 'lucide-react';
 
 const MOODS = [
   { label: 'Energized', icon: '⚡', color: '#38bdf8' },

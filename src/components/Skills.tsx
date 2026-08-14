@@ -23,15 +23,15 @@ export const Skills: React.FC = () => {
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         className="text-center mb-16"
       >
-        <div className="inline-flex items-center gap-2 apple-pill px-4 py-1.5 text-xs font-semibold text-sky-300 mb-4">
+        <div className="inline-flex items-center gap-2 apple-pill px-4 py-1.5 text-xs font-extrabold text-sky-300 mb-4 font-orbitron shadow-xl">
           <Cpu className="h-4 w-4 text-sky-400" />
-          <span>Tech Stack & Tools</span>
+          <span>TECH STACK & CAPABILITIES</span>
         </div>
-        <h2 className="text-3xl sm:text-5xl font-extrabold text-white mb-4">
-          Capabilities & <span className="apple-gradient-text">Skills</span>
+        <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-white mb-4 font-syne drop-shadow-xl">
+          Core <span className="react-cyan-text drop-shadow-[0_4px_25px_rgba(97,218,251,0.4)]">Skills & Stack</span>
         </h2>
-        <p className="text-slate-400 max-w-xl mx-auto text-sm sm:text-base">
-          Extracted from my GitHub Profile README — technologies, frameworks, and design tools I use daily.
+        <p className="text-slate-300 max-w-xl mx-auto text-sm sm:text-base font-jakarta leading-relaxed">
+          Technologies, frameworks, 3D WebGL engines, and digital design tools I use daily.
         </p>
       </motion.div>
 
@@ -44,20 +44,24 @@ export const Skills: React.FC = () => {
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: false, amount: 0.2 }}
             transition={{ duration: 0.6, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
-            className="apple-glass apple-glass-hover rounded-3xl p-6 flex flex-col justify-between relative overflow-hidden group"
+            className="apple-glass apple-glass-hover rounded-3xl p-6 flex flex-col justify-between relative overflow-hidden group border border-white/20 shadow-2xl backdrop-blur-2xl"
           >
             <div className="flex items-center justify-between mb-4">
-              <div className="h-12 w-12 rounded-2xl apple-glass flex items-center justify-center border border-white/10 group-hover:scale-110 transition-transform">
-                {iconMap[skill.iconName] || <Code2 className="h-5 w-5 text-sky-400" />}
+              <div className="h-12 w-12 rounded-2xl apple-glass flex items-center justify-center border border-white/15 group-hover:scale-110 transition-transform">
+                {iconMap[skill.iconName] || <Cpu className="h-5 w-5 text-sky-400" />}
               </div>
-              <span className="text-xs font-semibold text-slate-400 apple-pill px-3 py-1">
-                {skill.experience}
+              <span className="text-[10px] font-extrabold uppercase tracking-widest text-slate-300 apple-pill px-3 py-1 font-orbitron border border-white/10">
+                {skill.category}
               </span>
             </div>
 
             <div>
-              <h3 className="text-lg font-bold text-white mb-1">{skill.name}</h3>
-              <p className="text-xs font-medium text-slate-400 mb-4">{skill.category}</p>
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="text-lg font-bold text-white group-hover:text-sky-300 transition-colors font-syne">
+                  {skill.name}
+                </h3>
+                <span className="text-xs font-bold text-sky-400 font-orbitron">{skill.level}%</span>
+              </div>
 
               {/* Progress Bar */}
               <div className="w-full bg-slate-900/80 rounded-full h-2 overflow-hidden border border-white/10 p-0.5">

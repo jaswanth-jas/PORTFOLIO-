@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { LoadingScreen } from './components/LoadingScreen';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
+import { ReactPlayground } from './components/ReactPlayground';
 import { Projects } from './components/Projects';
 import { Skills } from './components/Skills';
 import { WellbeingWidget } from './components/WellbeingWidget';
@@ -32,6 +33,7 @@ export const App: React.FC = () => {
           {/* Main Core Sections */}
           <main className="relative z-10">
             <Hero />
+            <ReactPlayground />
             <Projects />
             <Skills />
             <WellbeingWidget />

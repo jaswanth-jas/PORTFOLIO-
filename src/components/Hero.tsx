@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { motion } from 'framer-motion';
 import { HoloCore } from './3d/HoloCore';
+import { ReactAtom3D } from './3d/ReactAtom3D';
 import { ParticleField } from './3d/ParticleField';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { soundEngine } from '../audio/soundEngine';
-import { ArrowRight, Sparkles, ShieldCheck, Zap, Activity, Cpu } from 'lucide-react';
+import { ArrowRight, Sparkles, Atom, Layers } from 'lucide-react';
 
 export const Hero: React.FC = () => {
+  const [hero3dMode, setHero3dMode] = useState<'atom' | 'core'>('atom');
+
   const handleInteraction = () => {
     soundEngine.playClick();
   };
@@ -17,8 +20,13 @@ export const Hero: React.FC = () => {
       {/* Background 3D Canvas */}
       <div className="absolute inset-0 z-0 opacity-80">
         <Canvas camera={{ position: [0, 0, 8], fov: 60 }}>
+          <ambientLight intensity={0.5} />
           <ParticleField count={2400} />
-          <HoloCore shape="torusKnot" color="#38bdf8" />
+          {hero3dMode === 'atom' ? (
+            <ReactAtom3D color="#61dafb" size={1.8} />
+          ) : (
+            <HoloCore shape="torusKnot" color="#38bdf8" />
+          )}
         </Canvas>
       </div>
 
@@ -29,15 +37,61 @@ export const Hero: React.FC = () => {
       {/* Main Hero Container */}
       <div className="relative z-10 max-w-5xl px-4 text-center">
         
-        {/* Web3 Dynamic Pill Tag */}
+        {/* 3D Mode Switcher & Web3 Status Pill */}
+        <div className="flex flex-wrap items-center justify-center gap-3 mb-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="inline-flex items-center gap-2 apple-pill px-4 py-1.5 text-xs font-semibold text-sky-300 shadow-xl"
+          >
+            <Sparkles className="h-4 w-4 text-sky-400 animate-pulse" />
+            <span>{PERSONAL_INFO.status}</span>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.15 }}
+            className="inline-flex items-center gap-1 p-1 apple-glass rounded-full border border-white/10 text-xs font-semibold"
+          >
+            <button
+              onClick={() => { soundEngine.playClick(); setHero3dMode('atom'); }}
+              className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] transition-all ${
+                hero3dMode === 'atom' ? 'bg-[#61dafb]/20 text-[#61dafb] border border-[#61dafb]/40' : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              <Atom className="h-3.5 w-3.5" />
+              <span>React 3D Atom</span>
+            </button>
+
+            <button
+              onClick={() => { soundEngine.playClick(); setHero3dMode('core'); }}
+              className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] transition-all ${
+                hero3dMode === 'core' ? 'bg-sky-500/20 text-sky-300 border border-sky-500/40' : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              <Layers className="h-3.5 w-3.5" />
+              <span>Holo Core</span>
+            </button>
+          </motion.div>
+        </div>
+
+        {/* Profile Portrait Showcase Badge */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="inline-flex items-center gap-2 apple-pill px-4 py-1.5 text-xs font-semibold text-sky-300 mb-8 shadow-xl"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.7, delay: 0.05 }}
+          className="flex justify-center mb-6"
         >
-          <Sparkles className="h-4 w-4 text-sky-400 animate-pulse" />
-          <span>{PERSONAL_INFO.status}</span>
+          <div className="relative p-1.5 rounded-full bg-gradient-to-tr from-sky-400 via-indigo-500 to-purple-600 shadow-[0_0_40px_rgba(56,189,248,0.4)] hover:scale-105 transition-transform duration-300">
+            <img
+              src="/jaswanth-profile.jpg"
+              alt="Jaswanth A Professional Portrait"
+              className="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover border-4 border-slate-900 shadow-2xl"
+            />
+            <div className="absolute bottom-1 right-1 bg-emerald-500 border-2 border-slate-900 w-5 h-5 rounded-full shadow-lg" title="Online & Available" />
+          </div>
         </motion.div>
 
         {/* Big Apple Hero Heading */}
@@ -45,38 +99,38 @@ export const Hero: React.FC = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-white mb-6 leading-tight font-web3"
+          className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-white mb-6 leading-tight font-syne drop-shadow-2xl"
         >
           Hello, I'm{' '}
-          <span className="apple-gradient-text">Jaswanth</span>
+          <span className="react-cyan-text drop-shadow-[0_10px_35px_rgba(97,218,251,0.4)]">Jaswanth</span>
         </motion.h1>
 
-        {/* Subtitle */}
+        {/* Subtitle with Anthropic Serif Aesthetic */}
         <motion.h2
           initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-          className="text-lg sm:text-xl md:text-2xl font-semibold text-slate-300 mb-6 max-w-3xl mx-auto leading-snug"
+          className="text-xl sm:text-2xl md:text-3xl font-medium text-slate-100 mb-6 max-w-3xl mx-auto leading-snug claude-serif tracking-normal"
         >
           {PERSONAL_INFO.title}
         </motion.h2>
 
-        {/* Bio Subtext */}
+        {/* Bio Subtext with Anthropic Serif Body Voice */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
-          className="text-sm sm:text-base text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed"
+          className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed claude-serif font-normal italic opacity-90"
         >
-          {PERSONAL_INFO.subtext}
+          "{PERSONAL_INFO.subtext}"
         </motion.p>
 
-        {/* Web3 Provider Style Floating Stat Cards */}
+        {/* Digital Marketing Style Floating Stat Cards */}
         <motion.div
           initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.55 }}
-          className="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-3xl mx-auto mb-10"
+          className="grid grid-cols-2 sm:grid-cols-4 gap-3.5 max-w-3xl mx-auto mb-10"
         >
           {PERSONAL_INFO.stats.map((stat, idx) => (
             <motion.div
@@ -84,10 +138,10 @@ export const Hero: React.FC = () => {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.6 + idx * 0.08 }}
-              className="apple-glass rounded-2xl p-3.5 border border-white/10 text-center"
+              className="apple-glass rounded-2xl p-4 border border-white/20 text-center shadow-2xl backdrop-blur-2xl"
             >
-              <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-0.5">{stat.label}</div>
-              <div className="text-base font-extrabold text-sky-400 font-web3">{stat.value}</div>
+              <div className="text-[10px] font-extrabold uppercase tracking-wider text-sky-300 font-orbitron mb-1">{stat.label}</div>
+              <div className="text-base sm:text-lg font-black text-white font-orbitron tracking-wide">{stat.value}</div>
             </motion.div>
           ))}
         </motion.div>

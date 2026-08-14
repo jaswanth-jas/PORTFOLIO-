@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { soundEngine } from '../audio/soundEngine';
-import { Sparkles, Volume2, VolumeX } from 'lucide-react';
+import { Volume2, VolumeX, Atom } from 'lucide-react';
 
 export const Navbar: React.FC = () => {
   const [muted, setMuted] = useState(false);
@@ -16,23 +16,34 @@ export const Navbar: React.FC = () => {
 
   return (
     <header className="fixed top-6 left-0 right-0 z-40 flex justify-center px-4">
-      <div className="apple-dock px-6 py-3 flex items-center gap-6 sm:gap-8 max-w-2xl w-full justify-between shadow-2xl">
+      <div className="apple-dock px-5 sm:px-7 py-3 flex items-center gap-4 sm:gap-6 max-w-4xl lg:max-w-5xl w-full justify-between shadow-2xl backdrop-blur-3xl border border-white/20">
         
-        {/* Apple Logo + Brand */}
+        {/* Profile Avatar + Brand Name */}
         <a
           href="#hero"
           onClick={handleNavClick}
-          className="flex items-center gap-2.5 text-white font-bold text-base tracking-tight hover:opacity-80 transition-opacity"
+          className="flex items-center gap-3 text-white font-bold text-base tracking-tight hover:opacity-90 transition-opacity shrink-0 group"
         >
-          <div className="h-8 w-8 rounded-xl bg-gradient-to-tr from-sky-400 to-purple-600 flex items-center justify-center text-white shadow-md">
-            <Sparkles className="h-4 w-4" />
+          <div className="relative">
+            <img
+              src="/jaswanth-profile.jpg"
+              alt="Jaswanth A"
+              className="h-9 w-9 sm:h-10 sm:w-10 rounded-full object-cover border-2 border-sky-400/80 shadow-md shadow-sky-500/25 group-hover:scale-105 transition-transform"
+            />
+            <span className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-400 border-2 border-slate-900 rounded-full" />
           </div>
-          <span>Jaswanth<span className="text-sky-400">.dev</span></span>
+          <span className="font-extrabold whitespace-nowrap text-sm sm:text-base">
+            Jaswanth<span className="text-sky-400">.dev</span>
+          </span>
         </a>
 
         {/* Navigation Links */}
-        <nav className="hidden md:flex items-center gap-6 text-xs font-semibold text-slate-300">
+        <nav className="hidden md:flex items-center gap-5 sm:gap-6 text-xs font-bold text-slate-200 whitespace-nowrap">
           <a href="#hero" onClick={handleNavClick} className="hover:text-white transition-colors">About</a>
+          <a href="#react-hub" onClick={handleNavClick} className="inline-flex items-center gap-1.5 hover:text-[#61dafb] transition-colors text-[#61dafb] font-extrabold">
+            <Atom className="h-3.5 w-3.5 animate-spin" style={{ animationDuration: '6s' }} />
+            <span className="whitespace-nowrap">React Hub</span>
+          </a>
           <a href="#projects" onClick={handleNavClick} className="hover:text-white transition-colors">Projects</a>
           <a href="#skills" onClick={handleNavClick} className="hover:text-white transition-colors">Skills</a>
           <a href="#experience" onClick={handleNavClick} className="hover:text-white transition-colors">Experience</a>
@@ -40,11 +51,11 @@ export const Navbar: React.FC = () => {
         </nav>
 
         {/* Audio Mute & GitHub Buttons */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5 shrink-0">
           <button
             onClick={toggleSound}
             title={muted ? 'Unmute Audio' : 'Mute Audio'}
-            className="h-8 w-8 rounded-full apple-glass flex items-center justify-center text-slate-300 hover:text-white transition-colors cursor-pointer"
+            className="h-9 w-9 rounded-full apple-glass flex items-center justify-center text-slate-200 hover:text-white transition-colors cursor-pointer border border-white/15"
           >
             {muted ? <VolumeX className="h-4 w-4 text-rose-400" /> : <Volume2 className="h-4 w-4 text-sky-400" />}
           </button>
@@ -54,7 +65,7 @@ export const Navbar: React.FC = () => {
             target="_blank"
             rel="noopener noreferrer"
             onClick={handleNavClick}
-            className="h-8 w-8 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors"
+            className="h-9 w-9 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors border border-white/15 shrink-0"
             title="GitHub Profile"
           >
             <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">

@@ -28,14 +28,14 @@ export const Projects: React.FC = () => {
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         className="text-center mb-16"
       >
-        <div className="inline-flex items-center gap-2 apple-pill px-4 py-1.5 text-xs font-semibold text-purple-300 mb-4">
+        <div className="inline-flex items-center gap-2 apple-pill px-4 py-1.5 text-xs font-extrabold text-purple-300 mb-4 font-orbitron shadow-xl">
           <Layers className="h-4 w-4 text-purple-400" />
-          <span>Curated Portfolio</span>
+          <span>CURATED PORTFOLIO</span>
         </div>
-        <h2 className="text-3xl sm:text-5xl font-extrabold text-white mb-4">
-          Featured <span className="apple-gradient-text">Projects</span>
+        <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-white mb-4 font-syne drop-shadow-xl">
+          Featured <span className="react-cyan-text drop-shadow-[0_4px_25px_rgba(97,218,251,0.4)]">Projects</span>
         </h2>
-        <p className="text-slate-400 max-w-xl mx-auto text-sm sm:text-base">
+        <p className="text-slate-300 max-w-xl mx-auto text-sm sm:text-base font-jakarta leading-relaxed">
           Showcasing my flagship AI systems, web development projects, Java suites, and UI/UX design systems.
         </p>
       </motion.div>
@@ -50,7 +50,7 @@ export const Projects: React.FC = () => {
             viewport={{ once: false, amount: 0.2 }}
             transition={{ duration: 0.7, delay: index * 0.12, ease: [0.16, 1, 0.3, 1] }}
             onClick={() => handleSelect(project)}
-            className="apple-glass apple-glass-hover rounded-3xl p-8 cursor-pointer relative overflow-hidden flex flex-col justify-between group"
+            className="apple-glass apple-glass-hover rounded-3xl p-8 cursor-pointer relative overflow-hidden flex flex-col justify-between group border border-white/20 shadow-2xl backdrop-blur-2xl"
           >
             {/* Ambient Card Background Glow */}
             <div
@@ -61,24 +61,24 @@ export const Projects: React.FC = () => {
             <div>
               {/* Category Pill */}
               <div className="flex items-center justify-between mb-6">
-                <span className="apple-pill px-3.5 py-1 text-xs font-semibold text-sky-300 border border-white/10">
+                <span className="apple-pill px-3.5 py-1 text-xs font-extrabold text-sky-300 border border-white/15 font-orbitron">
                   {project.category}
                 </span>
-                <Sparkles className="h-4 w-4 text-slate-500 group-hover:text-sky-400 transition-colors" />
+                <Sparkles className="h-4 w-4 text-slate-400 group-hover:text-sky-400 transition-colors" />
               </div>
 
               {/* Title */}
-              <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-sky-300 transition-colors">
+              <h3 className="text-2xl sm:text-3xl font-extrabold text-white mb-2 group-hover:text-sky-300 transition-colors font-syne">
                 {project.title}
               </h3>
 
               {/* Subtitle */}
-              <p className="text-xs font-semibold text-purple-300 mb-4 uppercase tracking-wider">
+              <p className="text-xs font-bold text-purple-300 mb-4 uppercase tracking-wider font-orbitron">
                 {project.subtitle}
               </p>
 
               {/* Description */}
-              <p className="text-slate-300 text-sm mb-6 leading-relaxed">
+              <p className="text-slate-200 text-sm mb-6 leading-relaxed font-jakarta">
                 {project.description}
               </p>
 
@@ -87,7 +87,7 @@ export const Projects: React.FC = () => {
                 {project.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="apple-pill px-3 py-1 text-xs font-medium text-slate-300 border border-white/5"
+                    className="apple-pill px-3 py-1 text-xs font-semibold text-slate-200 border border-white/10 font-jakarta"
                   >
                     {tag}
                   </span>

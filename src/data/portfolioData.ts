@@ -3,23 +3,23 @@ import type { Project, Skill, ExperienceItem } from '../types';
 export const PERSONAL_INFO = {
   name: 'JASWANTH A',
   handle: '@jaswanth-jas',
-  title: 'Full-Stack Web Developer · Java Engineer · UI/UX & Media Editor',
-  subtext: 'B.E ECE Student turning ideas into clean code, interactive glassmorphic web apps, and AI-driven solutions. Creator of the Smart Classroom & Timetable Scheduler.',
-  motto: 'Turning ideas into interfaces & code! 💻🎨',
+  title: 'React JS Developer · Full-Stack Web Engineer · UI/UX & Media Editor',
+  subtext: 'B.E ECE Student crafting modern React 19 web applications, interactive 3D WebGL interfaces, Java backend systems, and AI-powered university tools.',
+  motto: 'Building responsive React apps with clean architecture & high-fidelity UI! ⚛️💻🎨',
   sector: 'Tamil Nadu, India',
-  status: 'System Online · Available for Projects & Engineering Roles',
+  status: 'System Online · Open for React JS & Full-Stack Engineering Roles',
   stats: [
+    { label: 'REACT STACK', value: 'REACT 19 / TS' },
     { label: 'PROJECTS BUILT', value: '10+ APPS' },
-    { label: 'CORE TECH', value: 'JAVA / JS' },
-    { label: 'DESIGN FIDELITY', value: 'ULTRA HD' },
-    { label: 'GITHUB STATS', value: 'TOP 10%' },
+    { label: '3D SPATIAL WEB', value: 'R3F / THREE.JS' },
+    { label: 'DESIGN FIDELITY', value: 'APPLE GLASS' },
   ],
   aboutMeBullets: [
-    '🔭 Currently learning Java and Web Development',
-    '🎨 Exploring UI/UX Design & Glassmorphism interfaces in Figma',
-    '🎬 Crafting video and image edits in Premiere Pro & Photoshop',
-    '🌱 Constantly upgrading my skills — a lifelong learner',
-    '⚡ Fun fact: Good design + clean code = happy users!'
+    '⚛️ Crafting scalable React 19 & Next.js frontend web applications',
+    '🎨 Exploring Apple-inspired UI/UX Glassmorphic Design Systems in Figma & Tailwind v4',
+    '☕ Engineering Java OOP algorithms & MySQL database architectures',
+    '🎬 Producing multimedia video edits & graphics with Premiere Pro & Photoshop',
+    '⚡ Lifelong learner passionate about web performance and intuitive user experience'
   ]
 };
 
@@ -123,13 +123,13 @@ export const PROJECTS: Project[] = [
 ];
 
 export const SKILLS: Skill[] = [
-  { id: 'java', name: 'Java & OOP', category: 'Backend & Core', level: 92, experience: '3+ Yrs', iconName: 'Code2', orbitRadius: 2.8, orbitSpeed: 0.8, color: '#f43f5e' },
-  { id: 'webdev', name: 'HTML5, CSS3, JavaScript', category: 'Web Frontend', level: 95, experience: '3+ Yrs', iconName: 'Globe', orbitRadius: 3.8, orbitSpeed: -0.6, color: '#38bdf8' },
-  { id: 'react', name: 'React 19 & Tailwind CSS', category: 'Web Frontend', level: 90, experience: '2 Yrs', iconName: 'Layers', orbitRadius: 4.8, orbitSpeed: 0.5, color: '#a855f7' },
-  { id: 'uiux', name: 'UI/UX & Figma Wireframing', category: 'Design & Media', level: 90, experience: '3 Yrs', iconName: 'Palette', orbitRadius: 3.2, orbitSpeed: -0.9, color: '#eab308' },
-  { id: 'media', name: 'Premiere Pro & Photoshop', category: 'Design & Media', level: 88, experience: '3 Yrs', iconName: 'Film', orbitRadius: 4.2, orbitSpeed: 0.7, color: '#10b981' },
-  { id: 'dsa', name: 'Data Structures & MySQL', category: 'Backend & Core', level: 88, experience: '2 Yrs', iconName: 'Cpu', orbitRadius: 2.2, orbitSpeed: -1.1, color: '#38bdf8' },
-  { id: 'tools', name: 'Git, GitHub, VS Code', category: 'Developer Tools', level: 94, experience: '3 Yrs', iconName: 'Terminal', orbitRadius: 5.0, orbitSpeed: 0.6, color: '#a855f7' },
+  { id: 'react', name: 'React 19 & React JS Ecosystem', category: 'Frontend', level: 96, experience: '3+ Yrs', iconName: 'Layers', orbitRadius: 2.5, orbitSpeed: 0.9, color: '#61dafb' },
+  { id: 'r3f', name: 'React Three Fiber & WebGL 3D', category: '3D & Graphics', level: 90, experience: '2+ Yrs', iconName: 'Cpu', orbitRadius: 3.5, orbitSpeed: -0.7, color: '#a855f7' },
+  { id: 'webdev', name: 'HTML5, CSS3, JavaScript (ES6+)', category: 'Frontend', level: 95, experience: '3+ Yrs', iconName: 'Globe', orbitRadius: 4.2, orbitSpeed: 0.5, color: '#38bdf8' },
+  { id: 'java', name: 'Java 17 & OOP Architecture', category: 'Backend & Cloud', level: 92, experience: '3+ Yrs', iconName: 'Code2', orbitRadius: 4.8, orbitSpeed: -0.6, color: '#f43f5e' },
+  { id: 'uiux', name: 'UI/UX & Figma Glass Design', category: '3D & Graphics', level: 90, experience: '3 Yrs', iconName: 'Palette', orbitRadius: 3.2, orbitSpeed: -0.9, color: '#eab308' },
+  { id: 'media', name: 'Premiere Pro & Photoshop', category: '3D & Graphics', level: 88, experience: '3 Yrs', iconName: 'Film', orbitRadius: 5.2, orbitSpeed: 0.7, color: '#10b981' },
+  { id: 'tools', name: 'Git, GitHub, Vite & Tailwind v4', category: 'Systems & WASM', level: 94, experience: '3 Yrs', iconName: 'Terminal', orbitRadius: 5.8, orbitSpeed: 0.6, color: '#61dafb' },
 ];
 
 export const EXPERIENCES: ExperienceItem[] = [

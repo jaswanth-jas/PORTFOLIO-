@@ -1,26 +1,90 @@
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&family=Orbitron:wght@600;700;800;900&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Space+Grotesk:wght@500;600;700&family=Syne:wght@700;800;900&display=swap');
 @import "tailwindcss";
 
 @layer base {
   :root {
-    --web3-bg: #050811;
-    --apple-font: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
-    --web3-font: 'Space Grotesk', 'Inter', sans-serif;
+    --web3-bg: #030712;
+    --anthropic-serif: 'Newsreader', 'Instrument Serif', 'Source Serif 4', 'Lora', 'Georgia', serif;
+    --anthropic-sans: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+    --anthropic-mono: 'JetBrains Mono', 'Fira Code', monospace;
+    --font-display: 'Plus Jakarta Sans', 'Syne', sans-serif;
+    --font-body: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    --font-web3: 'Plus Jakarta Sans', 'Space Grotesk', sans-serif;
+    --font-cyber: 'Orbitron', 'Space Grotesk', sans-serif;
+    --font-mono: var(--anthropic-mono);
     --apple-script: 'Dancing Script', cursive;
   }
 
   body {
     background-color: var(--web3-bg);
-    font-family: var(--apple-font);
+    font-family: 'Plus Jakarta Sans', sans-serif;
     color: #f8fafc;
     overflow-x: hidden;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.015em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   h1, h2, h3, h4, .font-web3 {
-    font-family: var(--web3-font);
+    font-family: 'Plus Jakarta Sans', sans-serif;
     letter-spacing: -0.03em;
   }
+}
+
+/* Anthropic Claude.ai Proprietary Typeface System */
+.anthropic-serif, .claude-serif, .font-anthropic-serif {
+  font-family: var(--anthropic-serif) !important;
+  letter-spacing: -0.01em;
+}
+
+.anthropic-sans, .claude-sans, .font-anthropic-sans {
+  font-family: var(--anthropic-sans) !important;
+}
+
+.anthropic-mono, .claude-mono, .font-anthropic-mono {
+  font-family: var(--anthropic-mono) !important;
+}
+
+/* Global Typography Theme Overrides for Entire Webpage */
+body.font-syne, body.font-syne h1, body.font-syne h2, body.font-syne h3, body.font-syne h4, body.font-syne p, body.font-syne span, body.font-syne button, body.font-syne a, body.font-syne div {
+  font-family: 'Syne', sans-serif !important;
+}
+
+body.font-clash, body.font-clash h1, body.font-clash h2, body.font-clash h3, body.font-clash h4, body.font-clash p, body.font-clash span, body.font-clash button, body.font-clash a, body.font-clash div {
+  font-family: 'Clash Display', sans-serif !important;
+}
+
+body.font-cabinet, body.font-cabinet h1, body.font-cabinet h2, body.font-cabinet h3, body.font-cabinet h4, body.font-cabinet p, body.font-cabinet span, body.font-cabinet button, body.font-cabinet a, body.font-cabinet div {
+  font-family: 'Cabinet Grotesk', sans-serif !important;
+}
+
+body.font-playfair, body.font-playfair h1, body.font-playfair h2, body.font-playfair h3, body.font-playfair h4, body.font-playfair p, body.font-playfair span, body.font-playfair button, body.font-playfair a, body.font-playfair div {
+  font-family: 'Playfair Display', serif !important;
+}
+
+body.font-dm-serif, body.font-dm-serif h1, body.font-dm-serif h2, body.font-dm-serif h3, body.font-dm-serif h4, body.font-dm-serif p, body.font-dm-serif span, body.font-dm-serif button, body.font-dm-serif a, body.font-dm-serif div {
+  font-family: 'DM Serif Display', serif !important;
+}
+
+body.font-cinzel, body.font-cinzel h1, body.font-cinzel h2, body.font-cinzel h3, body.font-cinzel h4, body.font-cinzel p, body.font-cinzel span, body.font-cinzel button, body.font-cinzel a, body.font-cinzel div {
+  font-family: 'Cinzel', serif !important;
+}
+
+body.font-jakarta, body.font-jakarta h1, body.font-jakarta h2, body.font-jakarta h3, body.font-jakarta h4, body.font-jakarta p, body.font-jakarta span, body.font-jakarta button, body.font-jakarta a, body.font-jakarta div {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+}
+
+body.font-space, body.font-space h1, body.font-space h2, body.font-space h3, body.font-space h4, body.font-space p, body.font-space span, body.font-space button, body.font-space a, body.font-space div {
+  font-family: 'Space Grotesk', sans-serif !important;
+}
+
+body.font-inter, body.font-inter h1, body.font-inter h2, body.font-inter h3, body.font-inter h4, body.font-inter p, body.font-inter span, body.font-inter button, body.font-inter a, body.font-inter div {
+  font-family: 'Inter', sans-serif !important;
+}
+
+.font-orbitron {
+  font-family: var(--font-cyber) !important;
+  letter-spacing: 0.05em;
 }
 
 /* Background Ambient Orbs for Figma & Web3 Glass Contrast */
@@ -217,3 +281,25 @@
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.35);
 }
+
+/* React Cyan & Special Neon Glow Utilities */
+.react-cyan-text {
+  background: linear-gradient(135deg, #61dafb 0%, #38bdf8 50%, #a855f7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.react-glow-card {
+  border: 1px solid rgba(97, 218, 251, 0.3);
+  box-shadow: 0 0 35px rgba(97, 218, 251, 0.2), inset 0 0 15px rgba(97, 218, 251, 0.1);
+}
+
+@keyframes reactSpinSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-react-spin {
+  animation: reactSpinSlow 12s linear infinite;
+}
+
