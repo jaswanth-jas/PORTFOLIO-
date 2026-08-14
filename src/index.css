@@ -151,6 +151,9 @@ body.font-inter, body.font-inter h1, body.font-inter h2, body.font-inter h3, bod
     inset 0 1px 1px 0 rgba(255, 255, 255, 0.35);
   position: relative;
   overflow: hidden;
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .web3-bento-card {

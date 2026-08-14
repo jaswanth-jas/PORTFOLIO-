@@ -22,9 +22,9 @@ export const Projects: React.FC = () => {
     <section id="projects" className="relative py-24 px-4 max-w-7xl mx-auto z-10">
       {/* Section Title */}
       <motion.div
-        initial={{ opacity: 0, y: 35 }}
+        initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false, amount: 0.3 }}
+        viewport={{ once: true }}
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         className="text-center mb-16"
       >
@@ -45,9 +45,9 @@ export const Projects: React.FC = () => {
         {PROJECTS.map((project, index) => (
           <motion.div
             key={project.id}
-            initial={{ opacity: 0, y: 45 }}
+            initial={{ opacity: 0, y: 35 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.2 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.7, delay: index * 0.12, ease: [0.16, 1, 0.3, 1] }}
             onClick={() => handleSelect(project)}
             className="apple-glass apple-glass-hover rounded-3xl p-8 cursor-pointer relative overflow-hidden flex flex-col justify-between group border border-white/20 shadow-2xl backdrop-blur-2xl"

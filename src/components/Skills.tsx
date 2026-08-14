@@ -17,9 +17,9 @@ export const Skills: React.FC = () => {
   return (
     <section id="skills" className="relative py-24 px-4 max-w-7xl mx-auto z-10">
       <motion.div
-        initial={{ opacity: 0, y: 35 }}
+        initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false, amount: 0.3 }}
+        viewport={{ once: true }}
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         className="text-center mb-16"
       >
@@ -40,10 +40,10 @@ export const Skills: React.FC = () => {
         {SKILLS.map((skill, index) => (
           <motion.div
             key={skill.id}
-            initial={{ opacity: 0, y: 40, scale: 0.95 }}
+            initial={{ opacity: 0, y: 25, scale: 0.97 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: false, amount: 0.2 }}
-            transition={{ duration: 0.6, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: index * 0.06, ease: [0.16, 1, 0.3, 1] }}
             className="apple-glass apple-glass-hover rounded-3xl p-6 flex flex-col justify-between relative overflow-hidden group border border-white/20 shadow-2xl backdrop-blur-2xl"
           >
             <div className="flex items-center justify-between mb-4">
